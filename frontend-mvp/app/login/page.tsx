@@ -10,37 +10,41 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Store, Users, Truck, BarChart3 } from "lucide-react"
+import { useAuth } from "@/contexts/AuthContext"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
-type UserRole = "donor" | "recipient" | "driver" | "admin"
+type UserRole = "store" | "student" | "shelter" | "admin"
 
 export default function LoginPage() {
   const router = useRouter()
+  const { login, isLoading } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const roles = [
     {
-      id: "donor" as UserRole,
-      title: "Donor",
+      id: "store" as UserRole,
+      title: "Store",
       description: "Grocery stores & restaurants",
       icon: Store,
       route: "/donor",
     },
     {
-      id: "recipient" as UserRole,
-      title: "Recipient",
+      id: "shelter" as UserRole,
+      title: "Shelter",
       description: "Food banks & nonprofits",
       icon: Users,
       route: "/recipient",
     },
     {
-      id: "driver" as UserRole,
-      title: "Driver",
-      description: "Delivery & logistics",
-      icon: Truck,
-      route: "/driver",
+      id: "student" as UserRole,
+      title: "Student",
+      description: "Individual recipients",
+      icon: Users,
+      route: "/recipient",
     },
     {
       id: "admin" as UserRole,
@@ -53,24 +57,36 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedRole) return
-
-    setIsLoading(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 800))
-
-    // Store role in localStorage for frontend-only demo
-    localStorage.setItem("userRole", selectedRole)
-    localStorage.setItem("userEmail", email)
-
-    // Navigate to appropriate dashboard
-    const role = roles.find((r) => r.id === selectedRole)
-    if (role) {
-      router.push(role.route)
+    if (!selectedRole) {
+      setError("Please select a role")
+      return
     }
 
-    setIsLoading(false)
+    if (!email || !password) {
+      setError("Please enter both email and password")
+      return
+    }
+
+    setIsSubmitting(true)
+    setError("")
+
+    try {
+      const result = await login({ email, password })
+      
+      if (result.success) {
+        // Navigate to appropriate dashboard
+        const role = roles.find((r) => r.id === selectedRole)
+        if (role) {
+          router.push(role.route)
+        }
+      } else {
+        setError(result.error || "Login failed")
+      }
+    } catch (error) {
+      setError("An unexpected error occurred")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -103,6 +119,13 @@ export default function LoginPage() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleLogin} className="space-y-6">
+                {error && (
+                  <Alert className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+                    <AlertDescription className="text-red-800 dark:text-red-200">
+                      {error}
+                    </AlertDescription>
+                  </Alert>
+                )}
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-slate-700 dark:text-slate-300 font-medium">Email</Label>
                   <Input
@@ -136,12 +159,12 @@ export default function LoginPage() {
                     Forgot password?
                   </Link>
                 </div>
-                <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 py-3 text-lg font-semibold" disabled={!selectedRole || isLoading}>
-                  {isLoading ? "Signing in..." : "Sign In"}
+                <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 py-3 text-lg font-semibold" disabled={!selectedRole || isSubmitting || isLoading}>
+                  {isSubmitting ? "Signing in..." : "Sign In"}
                 </Button>
                 <p className="text-center text-sm text-slate-600 dark:text-slate-300">
                   Don't have an account?{" "}
-                  <Link href="#" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors font-medium">
+                  <Link href="/signup" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors font-medium">
                     Sign up
                   </Link>
                 </p>
