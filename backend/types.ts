@@ -1,6 +1,22 @@
 
 // TypeScript interfaces for tables in Supabase
 
+// User Profiles Table
+export interface UserProfile {
+    id: number;
+    user_id: string;
+    user_type: 'store' | 'student' | 'shelter';
+    name: string;
+    contact_email: string;
+    phone?: string;
+    address?: string;
+    zip_code?: number;
+    latitude?: number;
+    longitude?: number;
+    created_at: string;
+    updated_at: string;
+}
+
 // Recipient Community Table
 export interface RecipientCommunity {
     recipient_id: number;

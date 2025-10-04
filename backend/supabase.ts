@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { RecipientCommunity, FoodSurplus, HistoricalSales, BrainDietFood } from './types';
+import { UserProfile, RecipientCommunity, FoodSurplus, HistoricalSales, BrainDietFood } from './types';
 import * as dotenv from 'dotenv';
 
 // Load environment variables
