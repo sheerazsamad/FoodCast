@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -10,18 +10,21 @@ import { DashboardLayout } from "@/components/dashboard-layout"
 import { DonationCard } from "@/components/recipient/donation-card"
 import { ClaimModal } from "@/components/recipient/claim-modal"
 import { mockDonations } from "@/lib/mock-data"
+import { useUserData } from "@/hooks/useUserData"
 import type { Donation, FoodCategory } from "@/lib/types"
 
 export default function RecipientDashboard() {
+  const { userProfile, userClaims, loading, claimDonation, hasClaimed, getClaimedIds, refreshData } = useUserData()
+  
   const [donations, setDonations] = useState<Donation[]>(
     mockDonations.filter((d) => d.status === "confirmed" || d.status === "claimed"),
   )
   const [searchQuery, setSearchQuery] = useState("")
   const [categoryFilter, setCategoryFilter] = useState<FoodCategory | "all">("all")
   const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null)
-  const [myClaims, setMyClaims] = useState<string[]>(
-    mockDonations.filter((d) => d.claimedBy === "recipient-1").map((d) => d.id),
-  )
+  
+  // Get claimed donation IDs from persistent storage
+  const myClaims = getClaimedIds()
 
   const filteredDonations = donations.filter((donation) => {
     const matchesSearch =
@@ -34,26 +37,38 @@ export default function RecipientDashboard() {
     return matchesSearch && matchesCategory
   })
 
-  const availableDonations = filteredDonations.filter((d) => d.status === "confirmed")
+  const availableDonations = filteredDonations.filter((d) => d.status === "confirmed" && !myClaims.includes(d.id))
   const claimedDonations = filteredDonations.filter((d) => myClaims.includes(d.id))
 
-  const handleClaim = (donationId: string, notes: string) => {
-    setDonations(
-      donations.map((d) =>
-        d.id === donationId
-          ? {
-              ...d,
-              status: "claimed",
-              claimedBy: "recipient-1",
-              claimedByName: "SF Food Bank",
-              claimedAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            }
-          : d,
-      ),
-    )
-    setMyClaims([...myClaims, donationId])
-    setSelectedDonation(null)
+  const handleClaim = async (donationId: string, notes: string) => {
+    // Use persistent storage for claiming
+    const result = await claimDonation(donationId, notes)
+    
+    if (result === true) {
+      // Update local donations state to reflect the claim
+      setDonations(
+        donations.map((d) =>
+          d.id === donationId
+            ? {
+                ...d,
+                status: "claimed",
+                claimedBy: userProfile?.id || "recipient-1",
+                claimedByName: userProfile?.name || "SF Food Bank",
+                claimedAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              }
+            : d,
+        ),
+      )
+      // Refresh user data to ensure claims are up to date
+      refreshData()
+      setSelectedDonation(null)
+    } else if (result === 'already_claimed') {
+      alert("You have already claimed this donation.")
+      setSelectedDonation(null)
+    } else {
+      alert("Failed to claim donation. Please try again.")
+    }
   }
 
   const stats = {
@@ -62,8 +77,22 @@ export default function RecipientDashboard() {
     inTransit: claimedDonations.filter((d) => d.status === "in_transit").length,
   }
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">Loading your dashboard...</h2>
+          <p className="text-slate-600 dark:text-slate-300">Please wait while we load your data.</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <DashboardLayout role="recipient" userName="SF Food Bank">
+    <DashboardLayout role="recipient" userName={userProfile?.name || "SF Food Bank"}>
       <div className="space-y-6">
         {/* Header */}
         <div>
