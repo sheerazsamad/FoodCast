@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .error { color: red; margin-top: 10px; }
+        .success { color: green; margin-top: 10px; }
+        .debug { background: #f8f9fa; padding: 10px; border-radius: 4px; margin-top: 10px; font-family: monospace; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Frontend API Test</h1>
+    <p>This simulates exactly what the frontend signup page does.</p>
+    
+    <form id="signupForm">
+        <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" value="testuser@gmail.com" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" id="password" name="password" value="testpass123" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="userType">User Type *</label>
+            <select id="userType" name="userType" required>
+                <option value="store">Store</option>
+                <option value="student">Student</option>
+                <option value="shelter">Shelter</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" value="Test User" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" value="555-0123">
+        </div>
+        
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" value="123 Main St">
+        </div>
+        
+        <div class="form-group">
+            <label for="zipCode">ZIP Code</label>
+            <input type="text" id="zipCode" name="zipCode" value="12345">
+        </div>
+        
+        <button type="submit">Test Frontend Signup</button>
+    </form>
+    
+    <div id="result"></div>
+    <div id="debug"></div>
+
+    <script>
+        // Simulate the exact same logic as the frontend
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const userType = formData.get('userType');
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const address = formData.get('address');
+            const zipCode = formData.get('zipCode');
+            
+            // Frontend validation (same as signup page)
+            if (!userType) {
+                document.getElementById('result').innerHTML = '<div class="error">Please select a role</div>';
+                return;
+            }
+
+            if (!email || !password || !name) {
+                document.getElementById('result').innerHTML = '<div class="error">Please fill in all required fields</div>';
+                return;
+            }
+
+            // Email validation (same as signup page)
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            if (!emailRegex.test(email)) {
+                document.getElementById('result').innerHTML = '<div class="error">Please enter a valid email address</div>';
+                return;
+            }
+
+            // Check for common invalid domains (same as signup page)
+            const invalidDomains = ['foodcast.com', 'example.com', 'test.com']
+            const domain = email.split('@')[1]?.toLowerCase()
+            if (domain && invalidDomains.includes(domain)) {
+                document.getElementById('result').innerHTML = '<div class="error">Please use a real email address (try Gmail, Yahoo, or Outlook)</div>';
+                return;
+            }
+
+            if (password.length < 6) {
+                document.getElementById('result').innerHTML = '<div class="error">Password must be at least 6 characters long</div>';
+                return;
+            }
+            
+            // Build the exact same data structure as the frontend
+            const data = {
+                email: email,
+                password: password,
+                userType: userType,
+                profileData: {
+                    name: name,
+                    contact_email: email,
+                    phone: phone || undefined,
+                    address: address || undefined,
+                    zip_code: zipCode ? parseInt(zipCode) : undefined,
+                }
+            };
+            
+            console.log('Frontend validation passed, sending data:', data);
+            
+            try {
+                const response = await fetch('http://localhost:3001/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                console.log('Response:', result);
+                
+                const resultDiv = document.getElementById('result');
+                const debugDiv = document.getElementById('debug');
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `<div class="success">✅ Frontend signup successful! User ID: ${result.user.id}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Frontend signup failed: ${result.error}</div>`;
+                }
+                
+                debugDiv.innerHTML = `<div class="debug">
+                    <strong>Debug Info:</strong><br>
+                    Status: ${response.status}<br>
+                    Response: ${JSON.stringify(result, null, 2)}
+                </div>`;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `<div class="error">❌ Network error: ${error.message}</div>`;
+            }
+        });
+    </script>
+</body>
+</html>
+

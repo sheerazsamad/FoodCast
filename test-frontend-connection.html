@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend-Backend Connection Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 10px 0; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Frontend-Backend Connection Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Backend Health Check</h2>
+        <button onclick="testBackendHealth()">Test Backend Health</button>
+        <div id="health-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Frontend API Client Test</h2>
+        <button onclick="testFrontendAPI()">Test Frontend API Call</button>
+        <div id="api-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Full Signup Flow Test</h2>
+        <button onclick="testFullSignup()">Test Complete Signup Flow</button>
+        <div id="signup-result"></div>
+    </div>
+
+    <script>
+        // Test 1: Backend Health Check
+        async function testBackendHealth() {
+            const resultDiv = document.getElementById('health-result');
+            try {
+                const response = await fetch('http://localhost:3001/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>✅ Backend is healthy!</h3>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h3>❌ Backend health check failed</h3>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Test 2: Frontend API Client Test
+        async function testFrontendAPI() {
+            const resultDiv = document.getElementById('api-result');
+            try {
+                // Simulate the exact API call the frontend makes
+                const response = await fetch('http://localhost:3001/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'apitest@gmail.com',
+                        password: 'testpass123',
+                        userType: 'store',
+                        profileData: {
+                            name: 'API Test User',
+                            contact_email: 'apitest@gmail.com',
+                            phone: '555-0123'
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>✅ Frontend API call successful!</h3>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(data.error || `HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h3>❌ Frontend API call failed</h3>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Test 3: Full Signup Flow Test
+        async function testFullSignup() {
+            const resultDiv = document.getElementById('signup-result');
+            try {
+                // Test with a fresh email
+                const timestamp = Date.now();
+                const testEmail = `fulltest${timestamp}@gmail.com`;
+                
+                const response = await fetch('http://localhost:3001/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: testEmail,
+                        password: 'testpass123',
+                        userType: 'store',
+                        profileData: {
+                            name: 'Full Test User',
+                            contact_email: testEmail,
+                            phone: '555-0123',
+                            address: '123 Test St',
+                            zip_code: 12345
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            <h3>🎉 Complete signup flow successful!</h3>
+                            <p><strong>User ID:</strong> ${data.user.id}</p>
+                            <p><strong>Email:</strong> ${data.user.email}</p>
+                            <p><strong>User Type:</strong> ${data.user.userType}</p>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(data.error || `HTTP ${response.status}: ${response.statusText}`);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="error">
+                        <h3>❌ Full signup flow failed</h3>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+
