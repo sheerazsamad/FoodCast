@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import fs from 'fs'
+import path from 'path'
 
 interface UserProfile {
   id: string
@@ -11,9 +13,34 @@ interface UserProfile {
   phone: string
 }
 
-// In-memory storage for demo purposes
+// File-based storage for demo purposes
 // In production, this would be a proper database
-const userProfiles: Record<string, UserProfile> = {}
+const STORAGE_FILE = path.join(process.cwd(), 'user-profiles.json')
+
+// Load user profiles from file
+const loadUserProfiles = (): Record<string, UserProfile> => {
+  try {
+    if (fs.existsSync(STORAGE_FILE)) {
+      const data = fs.readFileSync(STORAGE_FILE, 'utf8')
+      return JSON.parse(data)
+    }
+  } catch (error) {
+    console.error('Error loading user profiles:', error)
+  }
+  return {}
+}
+
+// Save user profiles to file
+const saveUserProfiles = (profiles: Record<string, UserProfile>) => {
+  try {
+    fs.writeFileSync(STORAGE_FILE, JSON.stringify(profiles, null, 2))
+  } catch (error) {
+    console.error('Error saving user profiles:', error)
+  }
+}
+
+// Load user profiles on module initialization
+let userProfiles: Record<string, UserProfile> = loadUserProfiles()
 
 export async function GET(request: NextRequest) {
   try {
@@ -27,6 +54,9 @@ export async function GET(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    // Reload profiles from file to ensure we have the latest data
+    userProfiles = loadUserProfiles()
 
     // Find user by ID or email
     let user: UserProfile | undefined
@@ -82,6 +112,9 @@ export async function POST(request: NextRequest) {
     }
 
     userProfiles[id] = userProfile
+    
+    // Save to persistent storage
+    saveUserProfiles(userProfiles)
     
     console.log(`User profile created/updated for ${email}`)
     console.log('User profile:', userProfile)

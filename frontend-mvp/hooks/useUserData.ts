@@ -156,6 +156,10 @@ export function useUserData() {
         if (result.success) {
           // Reload claims to get updated list
           await loadUserClaims()
+          // Trigger analytics refresh for homepage/admin dashboards
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('analytics:refresh'))
+          }
           return true
         }
       } else {

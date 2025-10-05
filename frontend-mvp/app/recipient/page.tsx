@@ -8,13 +8,22 @@ import { Badge } from "@/components/ui/badge"
 import { Search, Package, CheckCircle2, Clock, Filter } from "lucide-react"
 import { DashboardLayout } from "@/components/dashboard-layout"
 import { DonationCard } from "@/components/recipient/donation-card"
+import { OfferCard } from "@/components/recipient/offer-card"
 import { ClaimModal } from "@/components/recipient/claim-modal"
+import { OfferClaimModal } from "@/components/recipient/offer-claim-modal"
+import { PersistentMap } from "@/components/ui/persistent-map"
 import { mockDonations } from "@/lib/mock-data"
 import { useUserData } from "@/hooks/useUserData"
-import type { Donation, FoodCategory } from "@/lib/types"
+import { useOffers } from "@/hooks/useOffers"
+import type { Donation, Offer, FoodCategory } from "@/lib/types"
 
 export default function RecipientDashboard() {
   const { userProfile, userClaims, loading, claimDonation, hasClaimed, getClaimedIds, refreshData } = useUserData()
+  const { offers, loading: offersLoading, claimOffer } = useOffers()
+  
+  // Debug logging for offers
+  console.log('RecipientDashboard: Received offers:', offers)
+  console.log('RecipientDashboard: Offers with location:', offers.filter(o => o.latitude && o.longitude))
   
   const [donations, setDonations] = useState<Donation[]>(
     mockDonations.filter((d) => d.status === "confirmed" || d.status === "claimed"),
@@ -22,6 +31,7 @@ export default function RecipientDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
   const [categoryFilter, setCategoryFilter] = useState<FoodCategory | "all">("all")
   const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null)
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null)
   
   // Get claimed donation IDs from persistent storage
   const myClaims = getClaimedIds()
@@ -37,8 +47,21 @@ export default function RecipientDashboard() {
     return matchesSearch && matchesCategory
   })
 
+  const filteredOffers = offers.filter((offer) => {
+    const matchesSearch =
+      offer.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      offer.donorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      offer.category.toLowerCase().includes(searchQuery.toLowerCase())
+
+    const matchesCategory = categoryFilter === "all" || offer.category === categoryFilter
+
+    return matchesSearch && matchesCategory
+  })
+
   const availableDonations = filteredDonations.filter((d) => d.status === "confirmed" && !myClaims.includes(d.id))
   const claimedDonations = filteredDonations.filter((d) => myClaims.includes(d.id))
+  const availableOffers = filteredOffers.filter((o) => o.status === "available")
+  const claimedOffers = filteredOffers.filter((o) => o.status === "claimed" || o.status === "in_transit")
 
   const handleClaim = async (donationId: string, notes: string) => {
     // Use persistent storage for claiming
@@ -71,10 +94,24 @@ export default function RecipientDashboard() {
     }
   }
 
+  const handleClaimOffer = async (offerId: string, notes: string) => {
+    const result = await claimOffer(offerId, userProfile?.id || "recipient-1", userProfile?.name || "SF Food Bank")
+    
+    if (result) {
+      // The offers hook will handle the backend update and refresh the offers list
+      setSelectedOffer(null)
+      // Refresh user data to update claims
+      refreshData()
+    } else {
+      alert("Failed to claim offer. Please try again.")
+    }
+  }
+
+
   const stats = {
-    available: availableDonations.length,
-    claimed: claimedDonations.length,
-    inTransit: claimedDonations.filter((d) => d.status === "in_transit").length,
+    available: availableDonations.length + availableOffers.length,
+    claimed: claimedDonations.length + claimedOffers.length,
+    inTransit: claimedDonations.filter((d) => d.status === "in_transit").length + claimedOffers.filter((o) => o.status === "in_transit").length,
   }
 
   if (loading) {
@@ -95,14 +132,15 @@ export default function RecipientDashboard() {
     <DashboardLayout role="recipient" userName={userProfile?.name || "SF Food Bank"}>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">Recipient Marketplace</h1>
+        <div className="relative overflow-hidden rounded-xl p-6 bg-gradient-to-r from-emerald-500/10 via-blue-500/10 to-purple-500/10 border border-white/10">
+          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gradient-to-br from-emerald-500/20 to-blue-600/20 blur-2xl"/>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent">Recipient Marketplace</h1>
           <p className="text-muted-foreground">Browse and claim available food donations</p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Available</CardTitle>
               <Package className="h-4 w-4 text-muted-foreground" />
@@ -113,7 +151,7 @@ export default function RecipientDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">My Claims</CardTitle>
               <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
@@ -124,7 +162,7 @@ export default function RecipientDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">In Transit</CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
@@ -135,6 +173,16 @@ export default function RecipientDashboard() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Persistent Map */}
+        <PersistentMap 
+          userRole="recipient"
+          offers={offers}
+          loading={offersLoading}
+          onOfferClick={(offer) => {
+            setSelectedOffer(offer)
+          }}
+        />
 
         {/* Search and Filters */}
         <Card>
@@ -178,6 +226,7 @@ export default function RecipientDashboard() {
           </CardContent>
         </Card>
 
+
         {/* Available Donations */}
         <div>
           <div className="flex items-center justify-between mb-4">
@@ -206,25 +255,52 @@ export default function RecipientDashboard() {
           )}
         </div>
 
+        {/* Available Direct Offers */}
+        {availableOffers.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold">Direct Offers</h2>
+              <Badge variant="default">{availableOffers.length} offers</Badge>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {availableOffers.map((offer) => (
+                <OfferCard
+                  key={offer.id}
+                  offer={offer}
+                  onClaim={() => setSelectedOffer(offer)}
+                  isClaimed={false}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* My Claims */}
-        {claimedDonations.length > 0 && (
+        {(claimedDonations.length > 0 || claimedOffers.length > 0) && (
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold">My Claims</h2>
-              <Badge variant="default">{claimedDonations.length} items</Badge>
+              <Badge variant="default">{claimedDonations.length + claimedOffers.length} items</Badge>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {claimedDonations.map((donation) => (
                 <DonationCard key={donation.id} donation={donation} onClaim={() => {}} isClaimed={true} />
               ))}
+              {claimedOffers.map((offer) => (
+                <OfferCard key={offer.id} offer={offer} onClaim={() => {}} isClaimed={true} />
+              ))}
             </div>
           </div>
         )}
 
-        {/* Claim Modal */}
+        {/* Claim Modals */}
         {selectedDonation && (
           <ClaimModal donation={selectedDonation} onClose={() => setSelectedDonation(null)} onClaim={handleClaim} />
+        )}
+        {selectedOffer && (
+          <OfferClaimModal offer={selectedOffer} onClose={() => setSelectedOffer(null)} onClaim={handleClaimOffer} />
         )}
       </div>
     </DashboardLayout>

@@ -1,13 +1,15 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { loadGoogleMaps, initializePlacesAutocomplete, type PlaceDetails } from "@/lib/googleMapsLoader"
 import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import AddressAutocompleteInput from "@/components/ui/AddressAutocompleteInput"
 import { Label } from "@/components/ui/label"
 import { Store, Users, Truck, BarChart3 } from "lucide-react"
 
@@ -21,10 +23,11 @@ export default function SignupPage() {
   const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     address: "",
-    city: "",
-    zipCode: "",
     phone: ""
   })
+  const [placeDetails, setPlaceDetails] = useState<PlaceDetails | null>(null)
+  const [addressError, setAddressError] = useState<string | null>(null)
+  const addressInputRef = useRef<HTMLInputElement>(null)
   const [fromLogin, setFromLogin] = useState(false)
   const [googleUserInfo, setGoogleUserInfo] = useState<{email: string, name: string} | null>(null)
 
@@ -47,6 +50,29 @@ export default function SignupPage() {
       }
     }
   }, [searchParams])
+
+  // Initialize Google Places Autocomplete for address
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await loadGoogleMaps()
+        if (addressInputRef.current) {
+          const ac = initializePlacesAutocomplete(addressInputRef.current, (place) => {
+            setPlaceDetails(place)
+            setFormData(prev => ({
+              ...prev,
+              address: place.formatted_address,
+            }))
+            setAddressError(null)
+          })
+          if (!ac) setAddressError('Failed to initialize address autocomplete')
+        }
+      } catch (e) {
+        setAddressError('Failed to load map services')
+      }
+    }
+    init()
+  }, [])
 
   const roles = [
     {
@@ -90,7 +116,7 @@ export default function SignupPage() {
   const handleNextStep = () => {
     if (step === 1 && selectedRole) {
       setStep(2)
-    } else if (step === 2 && formData.address && formData.city && formData.zipCode && formData.phone) {
+    } else if (step === 2 && formData.address && formData.phone) {
       handleGoogleSignIn()
     }
   }
@@ -138,8 +164,8 @@ export default function SignupPage() {
         name: user.name || "",
         role: role,
         address: parsedFormData.address,
-        city: parsedFormData.city,
-        zipCode: parsedFormData.zipCode,
+        city: "",
+        zipCode: "",
         phone: parsedFormData.phone
       }
 
@@ -180,7 +206,7 @@ export default function SignupPage() {
   }
 
   const isStep1Valid = selectedRole !== null
-  const isStep2Valid = formData.address && formData.city && formData.zipCode && formData.phone
+  const isStep2Valid = formData.address && formData.phone
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 flex items-center justify-center p-4">
@@ -356,46 +382,22 @@ export default function SignupPage() {
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="address" className="text-slate-700 dark:text-slate-300 font-medium">Street Address</Label>
-                    <Input
+                    <AddressAutocompleteInput
                       id="address"
                       name="address"
-                      type="text"
-                      placeholder="123 Main Street"
                       value={formData.address}
-                      onChange={handleInputChange}
-                      required
-                      className="bg-white/20 dark:bg-slate-700/20 border-white/30 dark:border-slate-600/30 backdrop-blur-sm focus:bg-white/30 dark:focus:bg-slate-700/30 transition-all duration-300"
+                      onChange={(v) => setFormData(prev => ({...prev, address: v}))}
+                      onPlaceSelected={(place) => setPlaceDetails(place)}
                     />
+                    {addressError && (
+                      <p className="text-sm text-red-500">{addressError}</p>
+                    )}
+                    {placeDetails && (
+                      <p className="text-sm text-green-600">✓ Address verified: {placeDetails.formatted_address}</p>
+                    )}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="city" className="text-slate-700 dark:text-slate-300 font-medium">City</Label>
-                      <Input
-                        id="city"
-                        name="city"
-                        type="text"
-                        placeholder="New York"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        required
-                        className="bg-white/20 dark:bg-slate-700/20 border-white/30 dark:border-slate-600/30 backdrop-blur-sm focus:bg-white/30 dark:focus:bg-slate-700/30 transition-all duration-300"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="zipCode" className="text-slate-700 dark:text-slate-300 font-medium">ZIP Code</Label>
-                      <Input
-                        id="zipCode"
-                        name="zipCode"
-                        type="text"
-                        placeholder="10001"
-                        value={formData.zipCode}
-                        onChange={handleInputChange}
-                        required
-                        className="bg-white/20 dark:bg-slate-700/20 border-white/30 dark:border-slate-600/30 backdrop-blur-sm focus:bg-white/30 dark:focus:bg-slate-700/30 transition-all duration-300"
-                      />
-                    </div>
-                  </div>
+                {/* City and ZIP removed; populated via selected address if needed later */}
 
                   <div className="space-y-2">
                     <Label htmlFor="phone" className="text-slate-700 dark:text-slate-300 font-medium">Phone Number</Label>
@@ -443,8 +445,6 @@ export default function SignupPage() {
                   <h3 className="font-bold text-lg text-slate-800 dark:text-slate-200 mb-2">Contact Info</h3>
                   <div className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
                     <p><strong>Address:</strong> {formData.address || "Not provided"}</p>
-                    <p><strong>City:</strong> {formData.city || "Not provided"}</p>
-                    <p><strong>ZIP:</strong> {formData.zipCode || "Not provided"}</p>
                     <p><strong>Phone:</strong> {formData.phone || "Not provided"}</p>
                   </div>
                 </div>

@@ -1,0 +1,16 @@
+{
+  "totalDonations": 20,
+  "totalPredicted": 9,
+  "totalConfirmed": 20,
+  "totalClaimed": 20,
+  "totalDelivered": 20,
+  "predictionAccuracy": 85.2,
+  "averageResponseTime": 2.3,
+  "totalMealsRescued": 816,
+  "totalWeight": 408,
+  "co2Saved": 204.0,
+  "totalValueSaved": 1725.05,
+  "activeDonors": 9,
+  "activeRecipients": 5,
+  "pendingOffers": 14
+}

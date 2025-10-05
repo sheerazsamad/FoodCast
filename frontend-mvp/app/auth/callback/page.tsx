@@ -43,24 +43,34 @@ export default function AuthCallback() {
       const result = await response.json()
 
       if (result.success && result.exists) {
-        // User exists - check if they have a role stored
-        const existingRole = localStorage.getItem("userRole")
+        // Fetch user profile to persist role/id for this email
+        try {
+          const profileRes = await fetch(`/api/users/profile?email=${encodeURIComponent(user.email || '')}`)
+          if (profileRes.ok) {
+            const profile = await profileRes.json()
+            if (profile?.success && profile?.user) {
+              const role = profile.user.role || localStorage.getItem("selectedRole") || "donor"
+              localStorage.setItem("userRole", role)
+              localStorage.setItem("userEmail", user.email || "")
+              localStorage.setItem("userName", user.name || profile.user.name || "")
+              localStorage.setItem("userId", profile.user.id)
+              localStorage.removeItem("selectedRole")
+              router.push(`/${role}`)
+              return
+            }
+          }
+        } catch (e) {
+          console.error('Failed to load profile for existing user:', e)
+        }
+        // Fallback: store known info and route to role selection if missing
         const selectedRole = localStorage.getItem("selectedRole")
-        
-        if (existingRole) {
-          // Update user info and redirect to dashboard
-          localStorage.setItem("userEmail", user.email || "")
-          localStorage.setItem("userName", user.name || "")
-          router.push(`/${existingRole}`)
-        } else if (selectedRole) {
-          // User exists and has a selected role from login - store it and redirect
+        if (selectedRole) {
           localStorage.setItem("userRole", selectedRole)
           localStorage.setItem("userEmail", user.email || "")
           localStorage.setItem("userName", user.name || "")
           localStorage.removeItem("selectedRole")
           router.push(`/${selectedRole}`)
         } else {
-          // User exists but no role stored - redirect to login with message
           router.push("/login?message=Please select your role to continue")
         }
       } else {

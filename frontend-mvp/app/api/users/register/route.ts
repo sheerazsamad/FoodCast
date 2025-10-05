@@ -5,8 +5,8 @@ interface UserRegistrationData {
   name: string
   role: 'donor' | 'recipient' | 'driver' | 'admin'
   address: string
-  city: string
-  zipCode: string
+  city?: string
+  zipCode?: string
   phone: string
 }
 
@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
   try {
     const body: UserRegistrationData = await request.json()
     
-    // Validate required fields
-    if (!body.email || !body.name || !body.role || !body.address || !body.city || !body.zipCode || !body.phone) {
+    // Validate required fields (city/zip optional)
+    if (!body.email || !body.name || !body.role || !body.address || !body.phone) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
         { status: 400 }
@@ -39,8 +39,8 @@ export async function POST(request: NextRequest) {
       name: body.name,
       contact_email: body.email,
       phone: body.phone,
-      address: `${body.address}, ${body.city}, ${body.zipCode}`,
-      zip_code: parseInt(body.zipCode),
+      address: body.address,
+      zip_code: body.zipCode ? parseInt(body.zipCode) : null,
       // Note: latitude and longitude would need to be geocoded from address
       latitude: null,
       longitude: null
@@ -68,8 +68,8 @@ export async function POST(request: NextRequest) {
           name: userProfile.name,
           role: body.role,
           address: body.address,
-          city: body.city,
-          zipCode: body.zipCode,
+          city: body.city || '',
+          zipCode: body.zipCode || '',
           phone: body.phone
         })
       })

@@ -1,0 +1,62 @@
+{
+  "test@example.com": {
+    "id": "test@example.com",
+    "email": "test@example.com",
+    "name": "Test User",
+    "role": "recipient",
+    "address": "123 Test St",
+    "city": "Test City",
+    "zipCode": "12345",
+    "phone": "555-1234"
+  },
+  "sheeraz.s.samad@gmail.com": {
+    "id": "sheeraz.s.samad@gmail.com",
+    "email": "sheeraz.s.samad@gmail.com",
+    "name": "Sheeraz Samad",
+    "role": "recipient",
+    "address": "Rutgers Student Center, 126 College Ave, New Brunswick, NJ 08901, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "1234567890x"
+  },
+  "sheerazsamad06@gmail.com": {
+    "id": "sheerazsamad06@gmail.com",
+    "email": "sheerazsamad06@gmail.com",
+    "name": "Sheeraz Samad",
+    "role": "donor",
+    "address": "2 Lenape Ln, West Windsor Township, NJ 08550, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "9293045360"
+  },
+  "ss5038@scarletmail.rutgers.edu": {
+    "id": "ss5038@scarletmail.rutgers.edu",
+    "email": "ss5038@scarletmail.rutgers.edu",
+    "name": "Sheeraz Samad",
+    "role": "donor",
+    "address": "2 Lenape Ln, West Windsor Township, NJ 08550, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "9293045360"
+  },
+  "sheerazsamadaid@gmail.com": {
+    "id": "sheerazsamadaid@gmail.com",
+    "email": "sheerazsamadaid@gmail.com",
+    "name": "Sheeraz Samad",
+    "role": "recipient",
+    "address": "2 Lenape Ln, West Windsor Township, NJ 08550, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "9293045360"
+  },
+  "jaydenshah2024@gmail.com": {
+    "id": "jaydenshah2024@gmail.com",
+    "email": "jaydenshah2024@gmail.com",
+    "name": "Jayden Shah",
+    "role": "donor",
+    "address": "4 Lenape Ct, Cranbury, NJ 08512, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "9293045360"
+  }
+}
