@@ -19,10 +19,28 @@ import { OverviewChart } from "@/components/admin/overview-chart"
 import { CategoryChart } from "@/components/admin/category-chart"
 import { RecentActivity } from "@/components/admin/recent-activity"
 import { TopDonors } from "@/components/admin/top-donors"
+import { PersistentMap } from "@/components/ui/persistent-map"
+import { useOffers } from "@/hooks/useOffers"
+import { useAnalytics } from "@/hooks/useAnalytics"
 import { mockKPIs } from "@/lib/mock-data"
 
 export default function AdminDashboard() {
-  const kpis = mockKPIs
+  const { analytics, loading: analyticsLoading } = useAnalytics()
+  const { offers, loading: offersLoading } = useOffers()
+  
+  // Use real analytics data if available, fallback to mock data
+  const kpis = analytics ? {
+    totalDonations: analytics.totalDonations,
+    predictionAccuracy: analytics.predictionAccuracy,
+    averageResponseTime: analytics.averageResponseTime,
+    totalMealsRescued: analytics.totalMealsRescued,
+    totalWeight: analytics.totalWeight,
+    co2Saved: analytics.co2Saved,
+    totalValueSaved: analytics.totalValueSaved,
+    activeDonors: analytics.activeDonors,
+    activeRecipients: analytics.activeRecipients,
+    pendingOffers: analytics.pendingOffers
+  } : mockKPIs
 
   const kpiCards = [
     {
@@ -114,6 +132,16 @@ export default function AdminDashboard() {
             )
           })}
         </div>
+
+        {/* Persistent Map */}
+        <PersistentMap 
+          userRole="admin"
+          offers={offers}
+          loading={offersLoading}
+          onOfferClick={(offer) => {
+            console.log('Admin viewing offer:', offer)
+          }}
+        />
 
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">

@@ -69,7 +69,19 @@ export function DonationList({ donations, onConfirm, onCancel }: DonationListPro
                 </div>
                 <div>
                   <span className="text-muted-foreground">Expires:</span>
-                  <p className="font-medium">{new Date(donation.expiryDate).toLocaleDateString()}</p>
+                  <p className="font-medium">
+                    {(() => {
+                      // Calculate expiration date from prediction date + shelf life
+                      if (donation.predictedDate) {
+                        const predictionDate = new Date(donation.predictedDate)
+                        const shelfLifeDays = (donation as any).shelfLifeDays || 7 // Default to 7 days
+                        const expiryDate = new Date(predictionDate)
+                        expiryDate.setDate(expiryDate.getDate() + shelfLifeDays)
+                        return expiryDate.toLocaleDateString()
+                      }
+                      return "Invalid Date"
+                    })()}
+                  </p>
                 </div>
                 {donation.claimedByName && (
                   <div>
@@ -78,6 +90,46 @@ export function DonationList({ donations, onConfirm, onCancel }: DonationListPro
                   </div>
                 )}
               </div>
+
+              {/* Enhanced MVP Features for AI Predictions */}
+              {(donation.urgency_score || donation.nutritional_value || donation.estimated_meals || donation.priority_level || donation.impact_score) && (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mt-4 pt-4 border-t border-gray-200">
+                  <div>
+                    <span className="text-muted-foreground">Urgency:</span>
+                    <p className="font-medium text-orange-600">
+                      {donation.urgency_score}/20
+                      {donation.priority_level && (
+                        <Badge 
+                          variant={donation.priority_level === 'Critical' ? 'destructive' :
+                                  donation.priority_level === 'High' ? 'default' :
+                                  donation.priority_level === 'Medium' ? 'secondary' : 'outline'}
+                          className="ml-1 text-xs"
+                        >
+                          {donation.priority_level}
+                        </Badge>
+                      )}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Nutrition:</span>
+                    <p className="font-medium text-purple-600">
+                      {donation.nutritional_value || 'N/A'}/10
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Meals:</span>
+                    <p className="font-medium text-blue-600">
+                      {donation.estimated_meals || Math.round(donation.quantity * 2)} meals
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Impact:</span>
+                    <p className="font-medium text-indigo-600">
+                      {donation.impact_score || 'N/A'}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="flex md:flex-col gap-2">

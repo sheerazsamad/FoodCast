@@ -1,0 +1,42 @@
+{
+  "test@example.com": {
+    "id": "test@example.com",
+    "email": "test@example.com",
+    "name": "Test User",
+    "role": "recipient",
+    "address": "123 Test St",
+    "city": "Test City",
+    "zipCode": "12345",
+    "phone": "555-1234"
+  },
+  "sheeraz.s.samad@gmail.com": {
+    "id": "sheeraz.s.samad@gmail.com",
+    "email": "sheeraz.s.samad@gmail.com",
+    "name": "Sheeraz Samad",
+    "role": "recipient",
+    "address": "56 Morell Street",
+    "city": "New Brunswick",
+    "zipCode": "08901",
+    "phone": "9293045360"
+  },
+  "sheerazsamad06@gmail.com": {
+    "id": "sheerazsamad06@gmail.com",
+    "email": "sheerazsamad06@gmail.com",
+    "name": "Sheeraz Samad",
+    "role": "donor",
+    "address": "234",
+    "city": "fsa",
+    "zipCode": "234",
+    "phone": "324"
+  },
+  "ss5038@scarletmail.rutgers.edu": {
+    "id": "ss5038@scarletmail.rutgers.edu",
+    "email": "ss5038@scarletmail.rutgers.edu",
+    "name": "Sheeraz Samad",
+    "role": "admin",
+    "address": "235",
+    "city": "sfa",
+    "zipCode": "243",
+    "phone": "234"
+  }
+}

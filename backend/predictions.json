@@ -1,0 +1,38 @@
+{
+  "donor-1": [
+    {
+      "id": "pred-1759651042780",
+      "donorId": "donor-1",
+      "donorName": "AI Prediction System",
+      "description": "Test Apples (AI Predicted)",
+      "category": "produce",
+      "quantity": 24,
+      "unit": "lbs",
+      "status": "confirmed",
+      "predictedDate": "2025-10-05",
+      "createdAt": "2025-10-05T07:57:22.780Z",
+      "updatedAt": "2025-10-05T07:59:09.899Z",
+      "location": "123 Main St, San Francisco, CA 94102",
+      "estimatedValue": 120,
+      "notes": "AI predicted surplus based on daily sales: 25, stock level: 60",
+      "storeId": "1",
+      "productId": "1",
+      "productName": "Test Apples",
+      "dailySales": 25,
+      "stockLevel": 60,
+      "price": 5,
+      "promotionFlag": false,
+      "brainDietFlag": true,
+      "shelfLifeDays": 7,
+      "predictedSurplus": 23.91,
+      "confidence": "moderate",
+      "urgency_score": 9,
+      "nutritional_value": 9,
+      "estimated_meals": 47,
+      "expiry_date": "2025-10-14",
+      "priority_level": "Medium",
+      "impact_score": 20.4,
+      "confirmedDate": "2025-10-05"
+    }
+  ]
+}

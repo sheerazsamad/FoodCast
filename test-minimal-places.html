@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Places Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .pac-container {
+            z-index: 9999 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+            border: 1px solid #e5e7eb !important;
+            margin-top: 4px !important;
+            background-color: white !important;
+            position: fixed !important;
+        }
+        .pac-item {
+            padding: 8px 12px !important;
+            border-bottom: 1px solid #f3f4f6 !important;
+            cursor: pointer !important;
+            font-size: 14px !important;
+        }
+        .pac-item:hover {
+            background-color: #f9fafb !important;
+        }
+        .pac-item-selected {
+            background-color: #eff6ff !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Minimal Places Test</h1>
+        
+        <div id="status" class="status">
+            Loading Google Maps API...
+        </div>
+        
+        <div>
+            <label for="address">Test Address Input:</label>
+            <input 
+                type="text" 
+                id="address" 
+                placeholder="Start typing an address..."
+                autocomplete="off"
+            />
+        </div>
+        
+        <div style="margin-top: 20px; font-size: 14px; color: #666;">
+            <strong>Test Instructions:</strong><br>
+            1. Wait for "Google Maps API loaded successfully"<br>
+            2. Start typing in the address field<br>
+            3. You should see a dropdown with suggestions<br>
+            4. The dropdown should appear directly below the input field
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = 'AIzaSyA2KtIXWOxLy-er302Z0Es2H7e68nlp_Fk';
+        const statusDiv = document.getElementById('status');
+        const addressInput = document.getElementById('address');
+        
+        function updateStatus(message) {
+            statusDiv.textContent = message;
+        }
+        
+        // Load Google Maps API
+        function loadGoogleMaps() {
+            return new Promise((resolve, reject) => {
+                // Check if already loaded
+                if (window.google && window.google.maps) {
+                    resolve();
+                    return;
+                }
+                
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&v=3.62`;
+                script.async = true;
+                script.defer = true;
+                
+                script.onload = () => {
+                    if (window.google && window.google.maps) {
+                        updateStatus('✅ Google Maps API loaded successfully!');
+                        resolve();
+                    } else {
+                        updateStatus('❌ Failed to load Google Maps API');
+                        reject(new Error('Google Maps not available'));
+                    }
+                };
+                
+                script.onerror = () => {
+                    updateStatus('❌ Failed to load Google Maps script');
+                    reject(new Error('Script loading failed'));
+                };
+                
+                document.head.appendChild(script);
+            });
+        }
+        
+        // Initialize Places Autocomplete
+        function initAutocomplete() {
+            if (!window.google || !window.google.maps || !window.google.maps.places) {
+                updateStatus('❌ Google Maps Places API not available');
+                return;
+            }
+            
+            try {
+                const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+                    types: ['establishment', 'geocode'],
+                    fields: ['place_id', 'formatted_address', 'geometry', 'name'],
+                    componentRestrictions: { country: 'us' }
+                });
+                
+                autocomplete.addListener('place_changed', () => {
+                    const place = autocomplete.getPlace();
+                    
+                    if (place.formatted_address) {
+                        updateStatus(`✅ Place selected: ${place.formatted_address}`);
+                    }
+                });
+                
+                // Fix positioning when dropdown appears
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'childList') {
+                            const pacContainer = document.querySelector('.pac-container');
+                            if (pacContainer && addressInput) {
+                                const inputRect = addressInput.getBoundingClientRect();
+                                pacContainer.style.position = 'fixed';
+                                pacContainer.style.top = `${inputRect.bottom + window.scrollY + 4}px`;
+                                pacContainer.style.left = `${inputRect.left + window.scrollX}px`;
+                                pacContainer.style.width = `${inputRect.width}px`;
+                                pacContainer.style.zIndex = '9999';
+                            }
+                        }
+                    });
+                });
+                
+                observer.observe(document.body, { childList: true, subtree: true });
+                
+                updateStatus('✅ Autocomplete initialized! Try typing an address...');
+                
+            } catch (error) {
+                updateStatus(`❌ Error initializing autocomplete: ${error.message}`);
+            }
+        }
+        
+        // Initialize everything
+        loadGoogleMaps()
+            .then(() => {
+                setTimeout(initAutocomplete, 500);
+            })
+            .catch((error) => {
+                updateStatus(`❌ Failed to load Google Maps: ${error.message}`);
+            });
+    </script>
+</body>
+</html>

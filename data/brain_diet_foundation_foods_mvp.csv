@@ -1,0 +1,151 @@
+clean_name,fdc_id,food_description,category_description,category_simple,brain_diet_flag,default_weight_unit,shelf_life_days,publication_date
+"Apricot, With Skin, Raw",2710815,"Apricot, with skin, raw",Fruits and Fruit Juices,fruit,True,1 unit,7,2024-10-31
+Figs,326786,"Figs, Pass 2, Region 2, OR/WA3, NFY010CJ3",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Figs, Dried",326869,"Figs, Dried, Pass 2, Region 3, n/a, Yes, Riboflavin - NFY010CFV",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Figs, Dried",326870,"Figs, Dried, Pass 2, Region 3, n/a, Yes, Niacin - NFY010CG0",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Strawberries, Fresh",327566,"Strawberries, fresh, Region 3, n/a, Yes - Minerals, Se, NF0008K4",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+Figs,326756,"Figs, Pass 2, Region 1, AR1, NFY010CJ8",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Figs, Dried",326868,"Figs, Dried, Pass 2, Region 3, n/a, Yes, Thiamin - NFY010CFU",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Oranges, Navel",327360,"Oranges, navel, Pass 2, Region 2, AlbertsonsStore (store #584) , OR/WA2 - NFY0107DD",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+Kiwi,326932,"Kiwi, Region 4, n/a, Yes, Vitamin K - NFY0100UL",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Pears, Bosc",332474,"Pears, Bosc, Region 1, n/a, Yes, Fiber - NFY0000BR",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Strawberries, Walmart, Ar1, Nf0008Sl",327630,"Strawberries, Walmart, AR1, NF0008SL",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Figs, Dried",326867,"Figs, Dried, Pass 2, Region 3, n/a, Yes, Vitamin C - NFY010CFT",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Peaches, Raw",325313,"Peaches, raw, Region 4, n/a, Yes - Fiber, NF0009EO",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Pears, Green Anjou, Regions 1 & 4",332461,"Pears, Green Anjou, Regions 1 & 4, n/a, Yes, Pantothenic Acid - NFY0000GP",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Grapefruit Juice, White, Shelf Stable, Signature Kitchen - Az, Ca2",325271,"Grapefruit Juice, White, Shelf Stable, Signature Kitchen - AZ, CA2",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Olives, Green Manzanilla, Mario - Ky, TX",332674,"Olives, Green Manzanilla, Mario - KY, TX",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Oranges, Navel",327363,"Oranges, Navel, Pass 2, Region 2, n/a, Yes - Minerals, NFY01074X",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Orange Juice, Refrigerated, No Pulp, Not Fortified",2003754,"ORANGE JUICE, REFRIGERATED, NO PULP, NOT FORTIFIED",Fruits and Fruit Juices,fruit,True,1 unit,7,2021-10-15
+"Peaches, Raw",325423,"Peaches, Raw, Pass 2, Region 1, n/a, Yes, Amino Acids - NFY010BRJ",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Peaches, Raw",325416,"Peaches, Raw, Pass 2, Region 1, MO2, NFY010CII",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Oranges, Navel",327500,"Oranges, navel, Pass 2, Region 1, NFY010GKW -- carotenoids",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Oranges, Navel",327466,"Oranges, Navel, Region 3, Pure Composite, CY01071",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Cantaloupe, Longview , Wa, Nf0009T1, Outlet13",327048,"Cantaloupe, Longview , WA, NF0009T1, Outlet13",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Strawberries, Fresh",327688,"Strawberries, Fresh, Pass 2, Region 3, n/a, Yes - Vitamin C, NFY01091A",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+Kiwi,327038,"Kiwi, Pass 2, Region 4, n/a, Yes, Thiamin - NFY010C03",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Oranges, Navel",327371,"Oranges, Navel, Pass 2, Region 2, n/a, Yes - Folate, NFY01075C",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+Kiwi,326954,"Kiwi, Region 2, n/a, Yes, Selenium - NFY0100SU",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+Figs,326755,"Figs, Pass 2, Region 1, AR1, NFY010CJ7",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Nectarines, Walmart, Tx3, Nf0008Ve",327280,"Nectarines, Walmart, TX3, NF0008VE",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Peaches, Springfield , NJ, Nf0009Uk, Outlet9",325307,"Peaches, Springfield , NJ, NF0009UK, Outlet9",Fruits and Fruit Juices,fruit,True,1 unit,7,2019-04-01
+"Carrots, Whole, Baby, , 14Oz, Tx2, Nf9912Ax",326406,"Carrots, Whole, Baby, Store Brand, 14oz, TX2, NF9912AX",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Carrots, Crinkle Cut, , Frozen, 16Oz",326357,"Carrots, Crinkle Cut, Store Brand, Frozen, 16oz, PA4, NF9912BZ",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Tomatoes, Diced, Canned, , Sunny Select",333122,"Tomatoes, diced, canned, STORE BRAND, SUNNY SELECT (CA) - NFY120AD1",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Carrots, Whole, Unprepared - Proximates",326440,"Carrots, whole, unprepared - Proximates - NF99140C",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Carrots, Whole, Unprepared - Minerals",326415,"Carrots, whole, unprepared - Minerals - NF99143V",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Tocopherols, Pickles, Kosher Dill, Spears, Vlasic",324373,"Tocopherols, Pickles, kosher dill, spears, VLASIC (MI,OK) - NFY120HN5",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Starch, Onion Rings, Frozen, Ore-Ida",324293,"Starch, Onion rings, frozen, ORE-IDA (FL,MO) - NFY1207BB",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+Broccoli,321890,"Broccoli, Pass 2, Region 3, n/a, Yes, Minerals - NFY010D86",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+Kale,323502,Kale - NFY1212EX,Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Broccoli, Steamed",321831,"Broccoli, steamed, Pass 2, Region 2, n/a, Yes, Proximates - NFY010D8W",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Lettuce, Romaine, 2 Heads",327708,"Lettuce, Romaine, 2 heads (MI1) - NFY0905J5",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Kale, Frozen, Cooked",326136,"KALE, FROZEN, COOKED",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+Romaine Lettuce,327835,"Romaine Lettuce, Region 1, n/a, Yes - Proximates - NFY0101Q8",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Onions, Yellow",790578,"ONIONS, YELLOW",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2020-04-01
+Broccoli,321657,"Broccoli, Region 1, TN2, NFY0104UX",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+Broccoli,321858,"Broccoli, Pass 2, Region 4, n/a, Yes, Folate - NFY010CVP",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Carrots, Crinkle Cut, Westpac, Frozen, 16Oz, Mo2, Nf9912H8",326267,"Carrots, Crinkle Cut, Westpac, Frozen, 16oz, MO2, NF9912H8",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Ore-Ida, Onion Rings, Frozen",324173,"ORE-IDA, Onion rings, frozen (CA2) - NFY1206R9",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+Romaine Lettuce,327911,"Romaine Lettuce, Region 4, n/a, Yes - Starch - NFY0101T8",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Broccoli, Cooked",321638,"Broccoli, cooked (AL1,CA1) - CY0906L",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Ore-Ida, Onion Rings, Frozen",324235,"ORE-IDA, Onion rings, frozen (OK1) - NFY1206SL",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Carrots, Sliced Or Crinkle Cut, Frozen, Unprepared - Dietary Fiber",326234,"Carrots, sliced or crinkle cut, frozen, unprepared - Dietary fiber - NF9913W3",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+Broccoli,321771,"Broccoli, Region 2, CA1, NFY0104OI",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Carrots, Crinkle Cut, Vip, Frozen, 16Oz, Ar1, Nf99129K",326201,"Carrots, Crinkle Cut, Vip, Frozen, 16oz, AR1, NF99129K",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Thiamin, Onion Rings, Frozen, Alexia",324193,"Thiamin, Onion rings, frozen, ALEXIA (FL,MO) - NFY12068G",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Carrots, Sliced Or Crinkle Cut, Frozen, Unprepared - Vitamins",326216,"Carrots, sliced or crinkle cut, frozen, unprepared - Vitamins - NF9913T2",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Cabbage, Green, Raw",2346788,"cabbage, green, raw",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2022-10-28
+"Tomato, Paste, Canned, Without Salt Added",2685580,"Tomato, paste, canned, without salt added",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2024-04-18
+Romaine Lettuce,327879,"Romaine Lettuce, Region 3, IL2, NFY0102BD",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Niacin, Pickles, Kosher Dill, Spears, , Kroger",324522,"Niacin, Pickles, kosher dill, spears, store brand, KROGER (IN1,MI1) - NFY120HQV",Vegetables and Vegetable Products,vegetable,True,1 unit,7,2019-04-01
+"Corn Flour, Masa Harina, White Or Yellow, Dry, Raw",2710835,"Corn flour, masa harina, white or yellow, dry, raw",Cereal Grains and Pasta,grain,True,1 unit,180,2024-10-31
+"Flour, All Purpose",789829,"FLOUR, ALL PURPOSE (ENRICHED) (BLEACHED)",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Quinoa, Flour",2512431,"quinoa, flour",Cereal Grains and Pasta,grain,True,1 unit,180,2023-04-20
+"Flour, Corn, Yellow",790215,"FLOUR, CORN, YELLOW (FINE MEAL) (ENRICHED)",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Flour, Bread, White",790086,"FLOUR, BREAD, WHITE (ENRICHED) (UNBLEACHED)",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Farro, Pearled, Dry, Raw",2710828,"Farro, pearled, dry, raw",Cereal Grains and Pasta,grain,True,1 unit,180,2024-10-31
+"Flour, Whole Wheat, Unenriched",790023,"Flour, whole wheat, unenriched",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Flour, Rice, White",790169,"FLOUR, RICE, WHITE (ORGANIC)",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Flour, Wheat, All-Purpose, Enriched, Unbleached",789951,"Flour, wheat, all-purpose, enriched, unbleached",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Chia Seeds, Dry, Raw",2710819,"Chia seeds, dry, raw",Cereal Grains and Pasta,grain,True,1 unit,180,2024-10-31
+"Flour, Semolina, Semi-Coarse",2003884,"Flour, Semolina, Semi-Coarse",Cereal Grains and Pasta,grain,True,1 unit,180,2021-10-15
+"Flour, Sorghum",2512373,"Flour, sorghum",Cereal Grains and Pasta,grain,True,1 unit,180,2023-04-20
+"Flour, Semolina, Fine",2003589,"Flour, semolina, fine",Cereal Grains and Pasta,grain,True,1 unit,180,2021-10-28
+"Chia Seeds, Whole, Dry, Raw",2711041,"Chia seeds, whole, dry, raw",Cereal Grains and Pasta,grain,True,1 unit,180,2024-10-31
+"Amaranth, Flour",2512383,"amaranth, flour",Cereal Grains and Pasta,grain,True,1 unit,180,2023-04-20
+"Rice, White, Long Grain, Unenriched, Raw",2512381,"Rice, white, long grain, unenriched, raw",Cereal Grains and Pasta,grain,True,1 unit,180,2023-04-20
+"Flour, Spelt, Whole Grain",2003587,"Flour, spelt, whole grain",Cereal Grains and Pasta,grain,True,1 unit,180,2021-10-28
+"Sorghum Flour, White, Pearled, Unenriched, Dry, Raw",2710840,"Sorghum flour, white, pearled, unenriched, dry, raw",Cereal Grains and Pasta,grain,True,1 unit,180,2024-10-31
+"Flour, Whole Grain Oat",2261424,"Flour, whole grain oat",Cereal Grains and Pasta,grain,True,1 unit,180,2022-04-28
+"Flour, Rye",2512375,"Flour, rye",Cereal Grains and Pasta,grain,True,1 unit,180,2023-04-20
+"Flour, Whole Wheat",790030,"FLOUR, WHOLE WHEAT (UNENRICHED)",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Flour, Pastry, White",1104868,"FLOUR, PASTRY, WHITE (UNENRICHED) (UNBLEACHED)",Cereal Grains and Pasta,grain,True,1 unit,180,2020-10-30
+"Flour, Semolina, Coarse",2003882,"Flour, Semolina, Coarse",Cereal Grains and Pasta,grain,True,1 unit,180,2021-10-15
+"Flour, Rice, Glutenous",1104813,"FLOUR, RICE, GLUTENOUS",Cereal Grains and Pasta,grain,True,1 unit,180,2020-10-30
+"Flour, Whole Wheat",790019,"FLOUR, WHOLE WHEAT (UNENRICHED) (ORGANIC)",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Rice, Black, Unenriched, Raw",2710825,"Rice, black, unenriched, raw",Cereal Grains and Pasta,grain,True,1 unit,180,2024-10-31
+"Flour, All Purpose",789952,"FLOUR, ALL PURPOSE (UNENRICHED) (UNBLEACHED) (ORGANIC)",Cereal Grains and Pasta,grain,True,1 unit,180,2020-04-01
+"Flour, Amaranth",2512371,"Flour, amaranth",Cereal Grains and Pasta,grain,True,1 unit,180,2023-04-20
+"Flour, Pastry, Unenriched, Unbleached",1104913,"Flour, pastry, unenriched, unbleached",Cereal Grains and Pasta,grain,True,1 unit,180,2020-10-30
+"Flour, Semolina, Coarse And Semi-Coarse",2003588,"Flour, semolina, coarse and semi-coarse",Cereal Grains and Pasta,grain,True,1 unit,180,2021-10-28
+"Meaures & Comp, Braised, Rep 1, Chicken, Thigh, Non-Enhanced",331314,"Meaures & comp, braised, rep 1, Chicken, thigh, non-enhanced (CA1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Thiamin, Chicken, Dark Meat, Lean Only, Thigh, Braised, Enhanced - 14B-09-06",331842,"Thiamin, Chicken, dark meat, lean only, thigh, braised, enhanced (OK1,MI1) - 14B-09-06-B1",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Niacin, Chicken, Dark Meat, Lean Only, Thigh, Raw, Non-Enhanced - 14B-07-05",331545,"Niacin, Chicken, dark meat, lean only, thigh, raw, non-enhanced (AL1,CA1) - 14B-07-05-B3",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Tuna, Canned, Chicken Of The Sea Chunk Light, In Water, Drained Solids",333668,"Tuna, canned, CHICKEN OF THE SEA CHUNK LIGHT, IN WATER, drained solids (CT) - NFY090SBR",Finfish and Shellfish Products,protein,True,1 unit,2,2019-04-01
+"Peanut Butter, Creamy, /Other , Hyvee & Publix",324798,"Peanut butter, creamy, store brand/other brand, HYVEE & PUBLIX (FL,MO) - CY120GT",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Minerals, Haddock, Raw",333284,"Minerals, Haddock, raw (CT) - NFY060CMH",Finfish and Shellfish Products,protein,True,1 unit,2,2019-04-01
+"Beans, Dry, Black, 753",335903,"Beans, Dry, Black, 753 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Meaures & Comp, Braised, Rep 4, Chicken, Thigh, Non-Enhanced",331338,"Meaures & comp, braised, rep 4, Chicken, thigh, non-enhanced (AL1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Meaures & Comp, Braised, Rep 5, Chicken, Thigh, Non-Enhanced",331316,"Meaures & comp, braised, rep 5, Chicken, thigh, non-enhanced (NY1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Measures, Patty, Rep 6, Turkey, Ground, 7% Fat",330738,"Measures, patty, rep 6, Turkey, ground, 7% fat (FL1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Beans, Dry, Black, 305",335836,"Beans, Dry, Black, 305 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Retinol, Chicken, Skin, Raw, From Drumsticks And Thighs, Non-Enhanced - 14B-01-01-Retinol",330905,"Retinol, Chicken, skin, raw, from drumsticks and thighs, non-enhanced (National) - 14B-01-01-Retinol",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Hummus, Commercial",321358,"Hummus, commercial",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Meaures & Comp, Raw, Rep 2, Chicken, Drumstick, Non-Enhanced",331011,"Meaures & comp, raw, rep 2, Chicken, drumstick, non-enhanced (CA1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Beans, Dry, Black, 608",335859,"Beans, Dry, Black, 608 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Beans, Dry, Flor De Mayo, 823",335427,"Beans, Dry, Flor de Mayo, 823 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Beans, Dry, Navy, 11F",335317,"Beans, Dry, Navy, 11F-8030 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Meaures & Comp, Raw, Rep 2, Chicken, Drumstick, Non-Enhanced",330976,"Meaures & comp, raw, rep 2, Chicken, drumstick, non-enhanced (NY1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Fatty Acids, Peanut Butter, Creamy, Jif",324741,"Fatty Acids, Peanut butter, creamy, JIF (AL,CA1) - NFY120C94",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Beans, Dry, Flor De Mayo",335428,"Beans, Dry, Flor de Mayo (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Tuna, Canned, Starkist, Chunk Light, In Water, Drained Solids",333778,"Tuna, canned, STARKIST, CHUNK LIGHT, IN WATER, drained solids (MO) - NFY090SZ4",Finfish and Shellfish Products,protein,True,1 unit,2,2019-04-01
+"Meaures & Comp, Roasted, Rep 4, Chicken, Thigh, Non-Enhanced",331280,"Meaures & comp, roasted, rep 4, Chicken, thigh, non-enhanced (CA1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Riboflavin, Ground Turkey, 93% Lean, 7% Fat, Patties, Broiled",330643,"Riboflavin, Ground turkey, 93% lean, 7% fat, patties, broiled (CO1,CT1,IN1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Folate, Peanut Butter, Creamy, Jif",324736,"Folate, Peanut butter, creamy, JIF (AL,CA1) - NFY120C8Y",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Beans, Dry, Black, 251",335896,"Beans, Dry, Black, 251 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Meaures & Comp, Raw, Rep 2, Chicken, Drumstick, Enhanced",331859,"Meaures & comp, raw, rep 2, Chicken, drumstick, enhanced (OK1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Minerals, Tuna, Canned, In Water, Drained Solids, Bumblebee Chunk Light, In Water",333550,"Minerals, Tuna, canned, in water, drained solids, BUMBLEBEE CHUNK LIGHT, IN WATER (CO,CT) - NFY090S1A",Finfish and Shellfish Products,protein,True,1 unit,2,2019-04-01
+"Meaures & Comp, Braised, Rep 5, Chicken, Thigh, Non-Enhanced",331327,"Meaures & comp, braised, rep 5, Chicken, thigh, non-enhanced (NC1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Starch, Peanut Butter, Creamy, Jif",324794,"Starch, Peanut butter, creamy, JIF (MI,OK) - NFY120CAQ",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Beans, Dry, Small Red, 11F",335713,"Beans, Dry, Small Red, 11F-8137 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Cholesterol, Chicken Breasts, Boneless, Skinless, Non-Enhanced, Braised - 17A-02-04-Chole",331936,"Cholesterol, Chicken breasts, boneless, skinless, non-enhanced, braised (CO,CT) - 17A-02-04-Chole",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Folate, Peanut Butter, Creamy, Skippy",324672,"Folate, Peanut butter, creamy, SKIPPY (CO,CT) - NFY120C7E",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Tuna, Canned, Starkist, Chunk Light, In Water, Drained Solids",333775,"Tuna, canned, STARKIST, CHUNK LIGHT, IN WATER, drained solids (FL) - NFY090S8X",Finfish and Shellfish Products,protein,True,1 unit,2,2019-04-01
+"Riboflavin, Chicken, Skin, Roasted, From Drumsticks And Thighs, Non-Enhanced - 14B-02-03",330936,"Riboflavin, Chicken, skin, roasted, from drumsticks and thighs, non-enhanced (CO1,CT1,IN1) - 14B-02-03-B2",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Beans, Dry, Pinto, 372",335685,"Beans, Dry, Pinto, 372 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Beans, Dry, Great Northern, 11F",335961,"Beans, Dry, Great Northern, 11F-8008 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Beans, Dry, Pinto, 11F",335457,"Beans, Dry, Pinto, 11F-8081 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Selenium, Ground Turkey, 93% Lean, 7% Fat, Raw",330568,"Selenium, Ground turkey, 93% lean, 7% fat, raw (CA2,NC1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Beans, Dry, Light Red Kidney, 11F",335420,"Beans, Dry, Light Red Kidney, 11F-8186 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Meaures & Comp, Roasted, Rep 2, Chicken, Drumstick, Non-Enhanced",331042,"Meaures & comp, roasted, rep 2, Chicken, drumstick, non-enhanced (MO1)",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Beans, Dry, Pinto, 11F",335485,"Beans, Dry, Pinto, 11F-8037 (0% moisture)",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Thiamin, Peanut Butter, Creamy, Jif",324796,"Thiamin, Peanut butter, creamy, JIF (MI,OK) - NFY120CAS",Legumes and Legume Products,protein,True,1 unit,180,2019-04-01
+"Cholesterol, Pollock, Raw",333469,"Cholesterol, Pollock, raw (MI, MO, NY) - NFY060DQD",Finfish and Shellfish Products,protein,True,1 unit,2,2019-04-01
+"Minerals, Chicken, Dark Meat, Lean Only, Thigh, Roasted, Non-Enhanced - 14B-08-03-Min",331308,"Minerals, Chicken, dark meat, lean only, thigh, roasted, non-enhanced (CO1,CT1) - 14B-08-03-Min",Poultry Products,protein,True,1 unit,2,2019-04-01
+"Tuna, Canned, Bumblebee Chunk Light, In Water, Drained Solids",333554,"Tuna, canned, BUMBLEBEE CHUNK LIGHT, IN WATER, drained solids (CA) - NFY090SV3",Finfish and Shellfish Products,protein,True,1 unit,2,2019-04-01
+Sunflower Seeds Dry Roasted Salted,325437,Sunflower seeds dry roasted salted,Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+"Flaxseed, Ground",2262075,"Flaxseed, ground",Nut and Seed Products,nut/seed,True,1 unit,240,2022-04-28
+"Almonds, Dry Roasted, Salted",323157,"Almonds, dry roasted, salted - NFY1213KL",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+"Almonds, Dry Roasted, Salted",323278,"Almonds, dry roasted, salted - NFY1213L2",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+"Almonds, Dry Roasted, Salted",323228,"Almonds, dry roasted, salted - NFY1213ID",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+Coconut Flour,2515496,coconut flour,Nut and Seed Products,nut/seed,True,1 unit,240,2023-04-20
+"Sunflower Seeds, Dry Roasted, Salted",325496,"Sunflower seeds, dry roasted, salted - NFY1213G2",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+"Almonds, Dry Roasted, Salted",323174,"Almonds, dry roasted, salted - NFY1213JZ",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+"Almond Butter, Creamy",2262093,"almond butter, creamy",Nut and Seed Products,nut/seed,True,1 unit,240,2022-04-28
+"Sunflower Seeds, Dry Roasted, Salted",325500,"Sunflower seeds, dry roasted, salted - NFY1213G5",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+"Almonds, Dry Roasted, Salted",323202,"Almonds, dry roasted, salted - NFY1213JA",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+"Pumpkin Seeds , Raw",2515416,"pumpkin seeds (pepitas), raw",Nut and Seed Products,nut/seed,True,1 unit,240,2023-04-20
+"Almonds, Dry Roasted, Salted",323175,"Almonds, dry roasted, salted - NFY1213K0",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
+"Nuts, Pecans, Halves, Raw",2346395,"Nuts, pecans, halves, raw",Nut and Seed Products,nut/seed,True,1 unit,240,2022-10-28
+"Almonds, Dry Roasted, Salted",323270,"Almonds, dry roasted, salted - NFY1213KZ",Nut and Seed Products,nut/seed,True,1 unit,240,2019-04-01
