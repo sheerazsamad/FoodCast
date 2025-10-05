@@ -14,29 +14,29 @@
     "email": "sheeraz.s.samad@gmail.com",
     "name": "Sheeraz Samad",
     "role": "recipient",
-    "address": "56 Morell Street",
-    "city": "New Brunswick",
-    "zipCode": "08901",
-    "phone": "9293045360"
+    "address": "Rutgers Student Center, 126 College Ave, New Brunswick, NJ 08901, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "1234567890x"
   },
   "sheerazsamad06@gmail.com": {
     "id": "sheerazsamad06@gmail.com",
     "email": "sheerazsamad06@gmail.com",
     "name": "Sheeraz Samad",
     "role": "donor",
-    "address": "234",
-    "city": "fsa",
-    "zipCode": "234",
-    "phone": "324"
+    "address": "56 Morrell St, New Brunswick, NJ 08901, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "675"
   },
   "ss5038@scarletmail.rutgers.edu": {
     "id": "ss5038@scarletmail.rutgers.edu",
     "email": "ss5038@scarletmail.rutgers.edu",
     "name": "Sheeraz Samad",
-    "role": "admin",
-    "address": "235",
-    "city": "sfa",
-    "zipCode": "243",
-    "phone": "234"
+    "role": "driver",
+    "address": "1243",
+    "city": "dafs",
+    "zipCode": "325",
+    "phone": "43"
   }
 }

@@ -33,7 +33,7 @@ export function useAnalytics() {
   const fetchAnalytics = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/analytics')
+      const response = await fetch(`/api/analytics?t=${Date.now()}`, { cache: 'no-store' })
       const data: AnalyticsResponse = await response.json()
       
       if (data.success) {
@@ -53,11 +53,22 @@ export function useAnalytics() {
 
   useEffect(() => {
     fetchAnalytics()
-    
+
     // Refresh analytics every 30 seconds to show live updates
     const interval = setInterval(fetchAnalytics, 30000)
-    
-    return () => clearInterval(interval)
+
+    // Listen for global refresh events to update immediately after claims/updates
+    const onRefresh = () => fetchAnalytics()
+    if (typeof window !== 'undefined') {
+      window.addEventListener('analytics:refresh', onRefresh)
+    }
+
+    return () => {
+      clearInterval(interval)
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('analytics:refresh', onRefresh)
+      }
+    }
   }, [])
 
   return {

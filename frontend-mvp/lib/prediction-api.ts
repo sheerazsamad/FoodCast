@@ -18,6 +18,12 @@ export interface PredictionInput {
   brain_diet_flag?: boolean
   shelf_life_days?: number
   date?: string
+  // Optional pickup/location info for mapping
+  location?: string
+  place_id?: string
+  formatted_address?: string
+  latitude?: number
+  longitude?: number
 }
 
 export interface PredictionResult {

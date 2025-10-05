@@ -9,6 +9,8 @@ export interface PlaceDetails {
   latitude: number
   longitude: number
   name?: string
+  city?: string
+  postal_code?: string
 }
 
 export const loadGoogleMaps = (): Promise<typeof google> => {
@@ -98,7 +100,7 @@ export const initializePlacesAutocomplete = (
   try {
     const autocomplete = new window.google.maps.places.Autocomplete(input, {
       types: ['establishment', 'geocode'],
-      fields: ['place_id', 'formatted_address', 'geometry', 'name'],
+      fields: ['place_id', 'formatted_address', 'geometry', 'name', 'address_components'],
       componentRestrictions: { country: 'us' }
     })
 
@@ -110,12 +112,19 @@ export const initializePlacesAutocomplete = (
         return
       }
 
+      const components = place.address_components || []
+      const getComponent = (type: string) => components.find((c: any) => c.types?.includes(type))?.long_name
+      const city = getComponent('locality') || getComponent('sublocality_level_1') || getComponent('administrative_area_level_2') || ''
+      const postalCode = getComponent('postal_code') || ''
+
       const placeDetails = {
         place_id: place.place_id,
         formatted_address: place.formatted_address || '',
         latitude: place.geometry.location.lat(),
         longitude: place.geometry.location.lng(),
-        name: place.name
+        name: place.name,
+        city,
+        postal_code: postalCode
       }
 
       onPlaceSelected(placeDetails)

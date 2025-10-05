@@ -56,14 +56,15 @@ export default function DriverDashboard() {
     <DashboardLayout role="driver" userName="John Smith">
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold">Driver Dashboard</h1>
+        <div className="relative overflow-hidden rounded-xl p-6 bg-gradient-to-r from-sky-500/10 via-indigo-500/10 to-purple-500/10 border border-white/10">
+          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gradient-to-br from-sky-500/20 to-indigo-600/20 blur-2xl"/>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent">Driver Dashboard</h1>
           <p className="text-muted-foreground">Manage your delivery routes and update status</p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Assigned</CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
@@ -74,7 +75,7 @@ export default function DriverDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">In Progress</CardTitle>
               <Truck className="h-4 w-4 text-muted-foreground" />
@@ -85,7 +86,7 @@ export default function DriverDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Completed</CardTitle>
               <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
@@ -96,7 +97,7 @@ export default function DriverDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Total</CardTitle>
               <Package className="h-4 w-4 text-muted-foreground" />

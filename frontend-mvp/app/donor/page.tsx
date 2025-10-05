@@ -15,6 +15,7 @@ import { mockDonations } from "@/lib/mock-data"
 import { usePredictions } from "@/hooks/usePredictions"
 import { useOffers } from "@/hooks/useOffers"
 import type { Donation, Offer } from "@/lib/types"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 export default function DonorDashboard() {
   const [showPredictionForm, setShowPredictionForm] = useState(false)
@@ -26,7 +27,8 @@ export default function DonorDashboard() {
     loading: predictionsLoading, 
     error: predictionsError,
     createPrediction,
-    updatePrediction 
+    updatePrediction,
+    refreshPredictions 
   } = usePredictions("donor-1")
 
   // Use the offers hook
@@ -35,7 +37,8 @@ export default function DonorDashboard() {
     loading: offersLoading,
     error: offersError,
     createOffer,
-    updateOffer
+    updateOffer,
+    refreshOffers,
   } = useOffers("donor-1")
   
   // Combine saved predictions with mock donations (for demo purposes)
@@ -135,9 +138,10 @@ export default function DonorDashboard() {
     <DashboardLayout role="donor" userName="Whole Foods Market">
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="relative overflow-hidden rounded-xl p-6 bg-gradient-to-r from-amber-500/10 via-pink-500/10 to-purple-500/10 border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gradient-to-br from-amber-500/20 to-pink-600/20 blur-2xl"/>
           <div>
-            <h1 className="text-3xl font-bold">Donor Dashboard</h1>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-400 bg-clip-text text-transparent">Donor Dashboard</h1>
             <p className="text-muted-foreground">Predict and manage your surplus food donations</p>
             {savedPredictions.length > 0 && (
               <p className="text-sm text-green-600 mt-1">
@@ -159,7 +163,7 @@ export default function DonorDashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Predicted</CardTitle>
               <Clock className="h-4 w-4 text-muted-foreground" />
@@ -170,7 +174,7 @@ export default function DonorDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Confirmed</CardTitle>
               <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
@@ -181,7 +185,7 @@ export default function DonorDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Claimed</CardTitle>
               <Package className="h-4 w-4 text-muted-foreground" />
@@ -192,7 +196,7 @@ export default function DonorDashboard() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium">Delivered</CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -215,82 +219,28 @@ export default function DonorDashboard() {
           }}
         />
 
-        {/* AI Prediction Form */}
-        {showPredictionForm && (
-          <Card>
-            <CardHeader>
-              <CardTitle>AI Surplus Prediction</CardTitle>
-              <CardDescription>
-                Use our trained AI model to predict next-day food surplus
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <PredictionForm 
-                onClose={() => setShowPredictionForm(false)}
-                onPredictionComplete={async (result, formData) => {
-                  if (result.success && result.prediction) {
-                    // Create a new prediction with all AI data including enhanced MVP features
-                    const predictionData = {
-                      id: `pred-${Date.now()}`,
-                      donorId: "donor-1",
-                      donorName: "Whole Foods Market",
-                      description: result.prediction.product_name,
-                      category: "produce", // Default category, can be made dynamic
-                      quantity: Math.round(result.prediction.predicted_surplus),
-                      unit: "units",
-                      status: "predicted" as const,
-                      predictedDate: result.prediction.date,
-                      createdAt: new Date().toISOString(),
-                      updatedAt: new Date().toISOString(),
-                      location: "Store #" + result.prediction.store_id,
-                      estimatedValue: result.prediction.predicted_surplus * 5, // Estimate $5 per unit
-                      notes: `AI Predicted - Confidence: ${result.prediction.confidence}`,
-                      // AI prediction specific fields
-                      storeId: result.prediction.store_id,
-                      productId: result.prediction.product_id,
-                      productName: result.prediction.product_name,
-                      dailySales: formData?.daily_sales || 0,
-                      stockLevel: formData?.stock_level || 0,
-                      price: formData?.price || 0,
-                      promotionFlag: formData?.promotion_flag || false,
-                      brainDietFlag: formData?.brain_diet_flag || false,
-                      shelfLifeDays: formData?.shelf_life_days || 7, // Use form data or default to 7 days
-                      predictedSurplus: result.prediction.predicted_surplus,
-                      confidence: result.prediction.confidence,
-                      // Enhanced MVP features
-                      urgency_score: result.prediction.urgency_score,
-                      nutritional_value: result.prediction.nutritional_value,
-                      estimated_meals: result.prediction.estimated_meals,
-                      expiry_date: result.prediction.expiry_date,
-                      priority_level: result.prediction.priority_level,
-                      impact_score: result.prediction.impact_score
-                    }
-                    
-                    // Save the prediction to the backend
-                    const success = await createPrediction(predictionData)
-                    if (success) {
-                      console.log('✅ Prediction saved successfully!')
-                    } else {
-                      console.error('❌ Failed to save prediction')
-                    }
-                  }
-                }}
-                initialData={{
-                  store_id: "1", // Default store for this donor
-                  product_name: "Fresh Produce"
-                }}
-              />
-              <div className="mt-4 flex justify-end">
-                <Button 
-                  variant="outline" 
-                  onClick={() => setShowPredictionForm(false)}
-                >
-                  Close
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        {/* AI Prediction Form in Modal */}
+        <Dialog open={showPredictionForm} onOpenChange={setShowPredictionForm}>
+          <DialogContent className="sm:max-w-3xl">
+            <DialogHeader>
+              <DialogTitle>AI Surplus Prediction</DialogTitle>
+            </DialogHeader>
+            <PredictionForm 
+              onClose={() => setShowPredictionForm(false)}
+              onPredictionComplete={async (result, formData, place) => {
+                if (result.success && result.prediction) {
+                  // Prediction is already saved server-side in /api/predict.
+                  // Just refresh the list.
+                  await refreshPredictions()
+                }
+              }}
+              initialData={{
+                store_id: "1",
+                product_name: "Fresh Produce"
+              }}
+            />
+          </DialogContent>
+        </Dialog>
 
         {/* Offer Form */}
         {showOfferForm && (

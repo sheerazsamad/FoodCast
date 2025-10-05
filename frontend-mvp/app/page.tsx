@@ -485,7 +485,7 @@ export default function ModernLandingPage() {
                   <Leaf className="h-8 w-8 text-white" />
                 </div>
                 <div className="text-6xl font-black text-white mb-2">
-                  {analytics ? `${analytics.totalMealsRescued.toLocaleString()}+` : 'Loading...'}
+                  {analytics ? `${analytics.totalMealsRescued.toLocaleString()}` : 'Loading...'}
                 </div>
                 <div className="text-lg font-semibold text-white mb-1">Meals Rescued</div>
                 <div className="text-sm text-white/70">From going to waste</div>
@@ -513,9 +513,9 @@ export default function ModernLandingPage() {
                   <Target className="h-8 w-8 text-white" />
                 </div>
                 <div className="text-6xl font-black text-white mb-2">
-                  {analytics ? `${analytics.totalWeight.toLocaleString()}+` : 'Loading...'}
+                  {analytics ? `${analytics.totalWeight.toLocaleString()}` : 'Loading...'}
                 </div>
-                <div className="text-lg font-semibold text-white mb-1">Lbs Food Saved</div>
+                <div className="text-lg font-semibold text-white mb-1">lbs Food Saved</div>
                 <div className="text-sm text-white/70">From waste</div>
               </div>
             </div>
@@ -527,7 +527,7 @@ export default function ModernLandingPage() {
             <div className="bg-gradient-to-br from-white/5 to-white/2 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
               <div className="text-center">
                 <div className="text-3xl font-bold text-white mb-1">
-                  {analytics ? `${analytics.co2Saved}kg` : 'Loading...'}
+                  {analytics ? `${analytics.co2Saved} kg` : 'Loading...'}
                 </div>
                 <div className="text-sm font-medium text-white/80 mb-1">CO2 Saved</div>
                 <div className="text-xs text-white/60">Environmental impact</div>

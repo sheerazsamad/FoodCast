@@ -124,7 +124,17 @@ export function PersistentMap({ userRole = 'recipient', offers = [], loading = f
         },
         map: mapInstanceRef.current,
         title: `${offer.category} - ${offer.description}`,
-        icon: {
+        // Red for regular offers, Purple for AI-predicted offers (universal)
+        icon: offer.isFromPrediction ? {
+          url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="12" fill="#7c3aed" stroke="#ffffff" stroke-width="3"/>
+              <circle cx="16" cy="16" r="6" fill="#ffffff"/>
+            </svg>
+          `),
+          scaledSize: new window.google.maps.Size(32, 32),
+          anchor: new window.google.maps.Point(16, 16)
+        } : {
           url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
             <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
               <circle cx="16" cy="16" r="12" fill="#ef4444" stroke="#ffffff" stroke-width="3"/>
@@ -132,7 +142,7 @@ export function PersistentMap({ userRole = 'recipient', offers = [], loading = f
             </svg>
           `),
           scaledSize: new window.google.maps.Size(32, 32),
-          anchor: new window.google.maps.Point(16, 32)
+          anchor: new window.google.maps.Point(16, 16)
         }
       })
 
@@ -250,6 +260,10 @@ export function PersistentMap({ userRole = 'recipient', offers = [], loading = f
             <Badge variant="outline" className="flex items-center gap-1">
               <div className="w-3 h-3 bg-red-500 rounded-full"></div>
               Food Offers
+            </Badge>
+            <Badge variant="outline" className="flex items-center gap-1">
+              <div className="w-3 h-3 bg-purple-600 rounded-full"></div>
+              AI Predictions
             </Badge>
           </div>
         </div>

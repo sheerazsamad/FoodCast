@@ -126,6 +126,10 @@ export function useOffers(donorId?: string) {
     // Refresh offers to ensure we have the latest data
     if (result) {
       await fetchOffers()
+      // Notify analytics to refresh immediately
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('analytics:refresh'))
+      }
     }
     
     return result

@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import fs from 'fs'
+import path from 'path'
 
 interface ClaimData {
   donationId: string
@@ -11,6 +13,27 @@ interface ClaimData {
 // In-memory storage for demo purposes
 // In production, this would be a proper database
 const userClaims: Record<string, ClaimData[]> = {}
+
+// Persist claims to disk so analytics can read live data even across server restarts
+const claimsDataPath = path.join(process.cwd(), '..', 'backend', 'claims.json')
+
+// Load claims on startup
+try {
+  if (fs.existsSync(claimsDataPath)) {
+    const raw = JSON.parse(fs.readFileSync(claimsDataPath, 'utf8')) as Record<string, ClaimData[]>
+    Object.assign(userClaims, raw)
+  }
+} catch (e) {
+  console.warn('⚠️ Could not load persisted claims:', e)
+}
+
+const saveClaims = () => {
+  try {
+    fs.writeFileSync(claimsDataPath, JSON.stringify(userClaims, null, 2))
+  } catch (e) {
+    console.error('Failed to persist claims:', e)
+  }
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -81,6 +104,9 @@ export async function POST(request: NextRequest) {
     console.log(`User ${userId} claimed donation ${donationId}`)
     console.log('User claims:', userClaims[userId])
 
+    // persist
+    saveClaims()
+
     return NextResponse.json({
       success: true,
       message: 'Claim created successfully',
@@ -115,6 +141,9 @@ export async function DELETE(request: NextRequest) {
     }
     
     console.log(`User ${userId} unclaimed donation ${donationId}`)
+
+    // persist
+    saveClaims()
 
     return NextResponse.json({
       success: true,

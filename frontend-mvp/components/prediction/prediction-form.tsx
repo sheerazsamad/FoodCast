@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -16,9 +16,10 @@ import {
   type PredictionInput,
   type PredictionResponse 
 } from "@/lib/prediction-api"
+import { loadGoogleMaps, initializePlacesAutocomplete, type PlaceDetails } from "@/lib/googleMapsLoader"
 
 interface PredictionFormProps {
-  onPredictionComplete?: (result: PredictionResponse, formData?: PredictionInput) => void
+  onPredictionComplete?: (result: PredictionResponse, formData?: PredictionInput, place?: PlaceDetails | null) => void
   onClose?: () => void
   initialData?: Partial<PredictionInput>
 }
@@ -33,6 +34,31 @@ export function PredictionForm({ onPredictionComplete, onClose, initialData }: P
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<PredictionResponse | null>(null)
   const [errors, setErrors] = useState<string[]>([])
+  // Location state
+  const [placeDetails, setPlaceDetails] = useState<PlaceDetails | null>(null)
+  const [address, setAddress] = useState<string>("")
+  const [addressError, setAddressError] = useState<string | null>(null)
+  const addressInputRef = useRef<HTMLInputElement>(null)
+
+  // Init Google Places Autocomplete for address input
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await loadGoogleMaps()
+        if (addressInputRef.current) {
+          const ac = initializePlacesAutocomplete(addressInputRef.current, (place) => {
+            setPlaceDetails(place)
+            setAddress(place.formatted_address)
+            setAddressError(null)
+          })
+          if (!ac) setAddressError('Failed to initialize address autocomplete')
+        }
+      } catch (e) {
+        setAddressError('Failed to load map services')
+      }
+    }
+    init()
+  }, [])
 
   // Handle form input changes
   const handleInputChange = (field: keyof PredictionInput, value: string | number | boolean) => {
@@ -63,12 +89,20 @@ export function PredictionForm({ onPredictionComplete, onClose, initialData }: P
     setErrors([])
     
     try {
-      const predictionResult = await makePrediction(formData)
+      const predictionResult = await makePrediction({
+        ...formData,
+        // Pass location context for map pin if available
+        location: address || undefined,
+        place_id: placeDetails?.place_id,
+        formatted_address: placeDetails?.formatted_address,
+        latitude: placeDetails?.latitude,
+        longitude: placeDetails?.longitude,
+      })
       setResult(predictionResult)
       
       // Call the callback if provided
       if (onPredictionComplete) {
-        onPredictionComplete(predictionResult, formData)
+        onPredictionComplete(predictionResult, formData, placeDetails)
       }
       
       // Close the form after successful prediction
@@ -133,6 +167,29 @@ export function PredictionForm({ onPredictionComplete, onClose, initialData }: P
                   required
                 />
               </div>
+            </div>
+
+            {/* Pickup Location (required to plot on map) */}
+            <div className="space-y-2">
+              <Label htmlFor="prediction_location">Pickup Location *</Label>
+              <Input
+                ref={addressInputRef}
+                id="prediction_location"
+                placeholder="Start typing an address..."
+                value={address}
+                onChange={(e) => {
+                  setAddress(e.target.value)
+                  if (placeDetails && e.target.value !== placeDetails.formatted_address) {
+                    setPlaceDetails(null)
+                  }
+                }}
+                required
+              />
+              {addressError && <p className="text-sm text-red-500">{addressError}</p>}
+              {placeDetails && (
+                <p className="text-sm text-green-600">✓ Location verified: {placeDetails.formatted_address}</p>
+              )}
+              <p className="text-xs text-gray-500">We use this to place a marker on the map for your predicted donation.</p>
             </div>
 
             <div className="space-y-2">

@@ -12,6 +12,12 @@ interface PredictionInput {
   brain_diet_flag?: boolean
   shelf_life_days?: number
   date?: string
+  // Optional map/location
+  location?: string
+  place_id?: string
+  formatted_address?: string
+  latitude?: number
+  longitude?: number
 }
 
 // Interface for prediction response
@@ -130,72 +136,8 @@ export async function POST(request: NextRequest) {
     
     console.log('✅ Prediction successful:', modelResult.prediction)
     
-    // Automatically create an offer from the prediction
-    try {
-      // Calculate expiry date from AI prediction (if available) or default to 7 days
-      const expiryDate = modelResult.prediction.expiry_date 
-        ? new Date(modelResult.prediction.expiry_date).toISOString().split('T')[0]
-        : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      
-      // Set availability date to the night before expiry (1 day before)
-      const expiryDateObj = new Date(expiryDate)
-      const availableDateObj = new Date(expiryDateObj.getTime() - 24 * 60 * 60 * 1000) // 1 day before
-      const availableDate = availableDateObj.toISOString().split('T')[0]
-
-      const offerData = {
-        donorId: 'donor-1', // Default donor for now
-        donorName: 'AI Prediction System',
-        donorAddress: '123 Main St, San Francisco, CA 94102',
-        category: 'produce' as const,
-        description: `${modelResult.prediction.product_name} (AI Predicted)`,
-        quantity: Math.round(modelResult.prediction.predicted_surplus),
-        unit: 'lbs',
-        status: 'available' as const,
-        availableDate: availableDate,
-        expiryDate: expiryDate,
-        location: '123 Main St, San Francisco, CA 94102',
-        estimatedValue: Math.round(modelResult.prediction.predicted_surplus * (inputData.price || 10)),
-        notes: `AI predicted surplus based on daily sales: ${inputData.daily_sales}, stock level: ${inputData.stock_level}`,
-        isFromPrediction: true,
-        // AI prediction specific fields
-        storeId: inputData.store_id,
-        productId: inputData.product_id,
-        productName: modelResult.prediction.product_name,
-        dailySales: inputData.daily_sales,
-        stockLevel: inputData.stock_level,
-        price: inputData.price || 10,
-        promotionFlag: inputData.promotion_flag || false,
-        brainDietFlag: inputData.brain_diet_flag || false,
-        shelfLifeDays: inputData.shelf_life_days || 7,
-        predictedSurplus: modelResult.prediction.predicted_surplus,
-        confidence: modelResult.prediction.confidence,
-        // Enhanced AI prediction metrics (if available in model result)
-        urgency_score: (modelResult as any).urgency_score,
-        nutritional_value: (modelResult as any).nutritional_value,
-        estimated_meals: (modelResult as any).estimated_meals,
-        priority_level: (modelResult as any).priority_level,
-        impact_score: (modelResult as any).impact_score,
-      }
-
-      // Create the offer by calling the offers API
-      const offerResponse = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/offers`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(offerData),
-      })
-
-      if (offerResponse.ok) {
-        const offerResult = await offerResponse.json()
-        console.log('✅ Offer created from prediction:', offerResult.offer?.id)
-      } else {
-        console.error('❌ Failed to create offer from prediction:', await offerResponse.text())
-      }
-    } catch (offerError) {
-      console.error('❌ Error creating offer from prediction:', offerError)
-      // Don't fail the prediction if offer creation fails
-    }
+    // We used to auto-create an Offer from predictions here. Disabled per request
+    // to ensure only AI predictions are created.
 
     // Save the prediction to the predictions API
     try {
@@ -211,9 +153,16 @@ export async function POST(request: NextRequest) {
         predictedDate: new Date().toISOString().split('T')[0],
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        location: '123 Main St, San Francisco, CA 94102',
+        location: inputData.formatted_address || inputData.location || '123 Main St, San Francisco, CA 94102',
         estimatedValue: Math.round(modelResult.prediction.predicted_surplus * (inputData.price || 10)),
         notes: `AI predicted surplus based on daily sales: ${inputData.daily_sales}, stock level: ${inputData.stock_level}`,
+        // Map coordinates if provided
+        ...(typeof inputData.latitude === 'number' && typeof inputData.longitude === 'number' && {
+          latitude: inputData.latitude,
+          longitude: inputData.longitude,
+          place_id: inputData.place_id,
+          formatted_address: inputData.formatted_address,
+        }),
         // AI prediction specific fields
         storeId: inputData.store_id,
         productId: inputData.product_id,
