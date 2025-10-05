@@ -24,19 +24,39 @@
     "email": "sheerazsamad06@gmail.com",
     "name": "Sheeraz Samad",
     "role": "donor",
-    "address": "56 Morrell St, New Brunswick, NJ 08901, USA",
+    "address": "2 Lenape Ln, West Windsor Township, NJ 08550, USA",
     "city": "",
     "zipCode": "",
-    "phone": "675"
+    "phone": "9293045360"
   },
   "ss5038@scarletmail.rutgers.edu": {
     "id": "ss5038@scarletmail.rutgers.edu",
     "email": "ss5038@scarletmail.rutgers.edu",
     "name": "Sheeraz Samad",
-    "role": "driver",
-    "address": "1243",
-    "city": "dafs",
-    "zipCode": "325",
-    "phone": "43"
+    "role": "donor",
+    "address": "2 Lenape Ln, West Windsor Township, NJ 08550, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "9293045360"
+  },
+  "sheerazsamadaid@gmail.com": {
+    "id": "sheerazsamadaid@gmail.com",
+    "email": "sheerazsamadaid@gmail.com",
+    "name": "Sheeraz Samad",
+    "role": "recipient",
+    "address": "2 Lenape Ln, West Windsor Township, NJ 08550, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "9293045360"
+  },
+  "jaydenshah2024@gmail.com": {
+    "id": "jaydenshah2024@gmail.com",
+    "email": "jaydenshah2024@gmail.com",
+    "name": "Jayden Shah",
+    "role": "donor",
+    "address": "4 Lenape Ct, Cranbury, NJ 08512, USA",
+    "city": "",
+    "zipCode": "",
+    "phone": "9293045360"
   }
 }

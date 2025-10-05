@@ -25,24 +25,16 @@ export async function GET() {
     let offers: any[] = []
     let claims: Array<{ donationId: string, recipientId: string }> = []
     try {
-      const combinedDataPath = path.join(process.cwd(), '..', 'backend', 'combined_demo_offers.json')
-      const demoDataPath = path.join(process.cwd(), '..', 'backend', 'demo_offers.json')
       const claimsPath = path.join(process.cwd(), '..', 'backend', 'claims.json')
-      
-      if (fs.existsSync(combinedDataPath)) {
-        offers = JSON.parse(fs.readFileSync(combinedDataPath, 'utf8'))
-      } else if (fs.existsSync(demoDataPath)) {
-        offers = JSON.parse(fs.readFileSync(demoDataPath, 'utf8'))
-      }
-
+      // Offers now maintained in-memory via /api/offers; for analytics, prefer empty baseline unless a future DB is added
+      offers = []
       // Load live claims persisted by /api/users/claims
       if (fs.existsSync(claimsPath)) {
         const raw = JSON.parse(fs.readFileSync(claimsPath, 'utf8')) as Record<string, Array<{ donationId: string, recipientId: string }>>
-        // Flatten to an array of claims
         claims = Object.values(raw).flat()
       }
     } catch (error) {
-      console.error('⚠️ Could not load demo offers data for analytics:', error)
+      console.error('⚠️ Could not load analytics sources:', error)
     }
 
     // Calculate analytics based on offers

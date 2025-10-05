@@ -8,6 +8,9 @@
 
 // Types for prediction input and output
 export interface PredictionInput {
+  // Optional donor context to keep predictions scoped per account
+  donorId?: string
+  donorName?: string
   store_id: string
   product_id: string
   product_name?: string
@@ -67,6 +70,15 @@ export interface HealthCheckResponse {
  */
 export async function makePrediction(inputData: PredictionInput): Promise<PredictionResponse> {
   try {
+    // Attach donor context from localStorage if available
+    try {
+      if (typeof window !== 'undefined') {
+        const donorId = localStorage.getItem('userId') || undefined
+        const donorName = localStorage.getItem('userName') || undefined
+        if (donorId) inputData.donorId = donorId
+        if (donorName) inputData.donorName = donorName
+      }
+    } catch {}
     console.log('🤖 Making prediction request:', inputData)
     
     const response = await fetch('/api/predict', {

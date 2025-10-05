@@ -3,25 +3,21 @@ import type { Offer } from '@/lib/types'
 import fs from 'fs'
 import path from 'path'
 
-// Load demo data on startup
+// Start with an empty in-memory offers list (no demo data)
 let offers: Offer[] = []
 
-// Load demo offers data (including completed claims)
+// Initialize from persisted file if present (no demo seeding)
 try {
   const combinedDataPath = path.join(process.cwd(), '..', 'backend', 'combined_demo_offers.json')
-  const demoDataPath = path.join(process.cwd(), '..', 'backend', 'demo_offers.json')
-  
   if (fs.existsSync(combinedDataPath)) {
-    const demoData = JSON.parse(fs.readFileSync(combinedDataPath, 'utf8'))
-    offers = demoData
-    console.log(`✅ Loaded ${offers.length} demo offers (including completed claims)`)
-  } else if (fs.existsSync(demoDataPath)) {
-    const demoData = JSON.parse(fs.readFileSync(demoDataPath, 'utf8'))
-    offers = demoData
-    console.log(`✅ Loaded ${offers.length} demo offers`)
+    const persisted = JSON.parse(fs.readFileSync(combinedDataPath, 'utf8')) as Offer[]
+    if (Array.isArray(persisted)) {
+      offers = persisted
+      console.log(`✅ Loaded ${offers.length} persisted offers`)
+    }
   }
 } catch (error) {
-  console.log('⚠️ Could not load demo offers data:', error)
+  console.log('⚠️ Could not load persisted offers:', error)
 }
 
 // Save offers to file

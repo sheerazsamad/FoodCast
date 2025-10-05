@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 
 // Interface for prediction input data
 interface PredictionInput {
+  donorId?: string
+  donorName?: string
   store_id: string
   product_id: string
   product_name?: string
@@ -143,8 +145,10 @@ export async function POST(request: NextRequest) {
     try {
       const predictionData = {
         id: `pred-${Date.now()}`,
-        donorId: 'donor-1', // Default donor for now
-        donorName: 'AI Prediction System',
+        donorId: inputData.donorId || 'donor-1',
+        donorName: inputData.donorName || 'AI Prediction System',
+        donorId: inputData.donorId || 'donor-1',
+        donorName: inputData.donorName || 'AI Prediction System',
         description: `${modelResult.prediction.product_name} (AI Predicted)`,
         category: 'produce',
         quantity: Math.round(modelResult.prediction.predicted_surplus),

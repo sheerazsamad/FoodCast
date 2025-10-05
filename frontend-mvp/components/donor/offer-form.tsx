@@ -97,14 +97,14 @@ export function OfferForm({ onClose, onSubmit }: OfferFormProps) {
     }
 
     const newOffer: Omit<Offer, 'id' | 'createdAt' | 'updatedAt'> = {
-      donorId: "donor-1",
-      donorName: "Whole Foods Market",
-      donorAddress: "123 Main St, San Francisco, CA 94102",
+      donorId: (typeof window !== 'undefined' ? (localStorage.getItem('userId') || 'donor-unknown') : 'donor-unknown'),
+      donorName: (typeof window !== 'undefined' ? (localStorage.getItem('userName') || 'Donor') : 'Donor'),
+      donorAddress: formData.location || "",
       category: formData.category,
       description: formData.description,
       quantity: Number.parseFloat(formData.quantity),
       unit: formData.unit,
-      status: "available",
+      status: "claimed",
       availableDate: formData.availableDate,
       expiryDate: formData.expiryDate,
       location: formData.location,
@@ -114,6 +114,9 @@ export function OfferForm({ onClose, onSubmit }: OfferFormProps) {
       urgencyLevel: formData.urgencyLevel,
       pickupWindow: formData.pickupWindow,
       specialInstructions: formData.specialInstructions,
+      claimedBy: (typeof window !== 'undefined' ? (localStorage.getItem('userId') || undefined) : undefined),
+      claimedByName: (typeof window !== 'undefined' ? (localStorage.getItem('userName') || undefined) : undefined),
+      claimedAt: new Date().toISOString(),
       // Include map location data if available
       ...(placeDetails && {
         place_id: placeDetails.place_id,

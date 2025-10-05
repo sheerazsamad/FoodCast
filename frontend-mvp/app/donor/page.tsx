@@ -11,7 +11,7 @@ import { PredictionForm } from "@/components/prediction/prediction-form"
 import { DonationList } from "@/components/donor/donation-list"
 import { OfferForm } from "@/components/donor/offer-form"
 import { PersistentMap } from "@/components/ui/persistent-map"
-import { mockDonations } from "@/lib/mock-data"
+// Removed mockDonations to ensure new donors start with a clean slate
 import { usePredictions } from "@/hooks/usePredictions"
 import { useOffers } from "@/hooks/useOffers"
 import type { Donation, Offer } from "@/lib/types"
@@ -22,6 +22,8 @@ export default function DonorDashboard() {
   const [showOfferForm, setShowOfferForm] = useState(false)
   
   // Use the persistent predictions hook
+  const currentDonorId = typeof window !== 'undefined' ? (localStorage.getItem('userId') || 'donor-unknown') : 'donor-unknown'
+
   const { 
     predictions: savedPredictions, 
     loading: predictionsLoading, 
@@ -29,7 +31,7 @@ export default function DonorDashboard() {
     createPrediction,
     updatePrediction,
     refreshPredictions 
-  } = usePredictions("donor-1")
+  } = usePredictions(currentDonorId)
 
   // Use the offers hook
   const {
@@ -39,16 +41,18 @@ export default function DonorDashboard() {
     createOffer,
     updateOffer,
     refreshOffers,
-  } = useOffers("donor-1")
+  } = useOffers(currentDonorId)
   
   // Combine saved predictions with mock donations (for demo purposes)
-  const mockDonationsForDonor = mockDonations.filter((d) => d.donorId === "donor-1")
-  const donations = [...savedPredictions, ...mockDonationsForDonor]
+  const donations = [...savedPredictions]
 
   const stats = {
     predicted: donations.filter((d) => d.status === "predicted").length,
     confirmed: donations.filter((d) => d.status === "confirmed").length,
-    claimed: donations.filter((d) => d.status === "claimed" || d.status === "in_transit").length,
+    // Include both claimed donations (from predictions) and claimed direct offers
+    claimed:
+      donations.filter((d) => d.status === "claimed" || d.status === "in_transit").length +
+      offers.filter((o) => o.status === "claimed" || o.status === "in_transit").length,
     delivered: donations.filter((d) => d.status === "delivered").length,
     offers: offers.filter((o) => o.status === "available").length,
     claimedOffers: offers.filter((o) => o.status === "claimed" || o.status === "in_transit").length,
@@ -67,6 +71,8 @@ export default function DonorDashboard() {
       console.log('DonorDashboard: Offer created successfully, current offers count:', offers.length)
       setShowOfferForm(false)
       console.log('✅ Direct offer created successfully!')
+      // Immediately refresh offers so counters and lists update
+      await refreshOffers()
     } else {
       console.error('❌ Failed to create direct offer')
     }
